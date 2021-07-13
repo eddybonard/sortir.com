@@ -3,5 +3,9 @@
 {% block title %}{{ parent() }} - Accueil{% endblock %}
 
 {% block body %}
+    <div class="jumbotron text-right">
+        <h1>Date du jour : {{ 'nox'| date('d/M/Y') }}</h1>
+        <h1>Participant : {{ app.user.prenom }}</h1>
+    </div>
 
 {% endblock %}

@@ -40,12 +40,13 @@ class Participant implements UserInterface
     private $password;
 
     /**
-     * @Assert\Length(min=2, minMessage="Nom trop court")
+     * @Assert\Length(min=2, minMessage="Nom trop court", max=255, maxMessage="Nom trop long")
      * @ORM\Column(type="string", length=255)
      */
     private $nom;
 
     /**
+     * @Assert\Length(min=2, minMessage="Prenom trop court", max=255, maxMessage="Prenom trop long")
      * @ORM\Column(type="string", length=255)
      */
     private $prenom;
@@ -82,6 +83,7 @@ class Participant implements UserInterface
     private $participantSorties;
 
     /**
+     * @Assert\Length(min=2, minMessage="Pseudo trop court", max=255, maxMessage="Pseudo trop long")
      * @ORM\Column(type="string", length=255)
      */
     private $pseudo;
