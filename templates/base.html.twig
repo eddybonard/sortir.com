@@ -16,6 +16,13 @@
 </head>
 <body>
     <header>{% include 'include/enTete.html.twig' %}</header>
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }} mt-3 mr-3 ml-3 text-center">
+                <b> {{ message }}</b>
+            </div>
+        {% endfor %}
+    {% endfor %}
     <main>{% block body %}{% endblock %}
     </main>
     <footer>{% include 'include/piedDePage.html.twig' %}</footer>

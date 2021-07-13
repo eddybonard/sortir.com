@@ -26,14 +26,14 @@ class RegistrationController extends AbstractController
                                 SluggerInterface $slugger): Response
     {
         $user = new Participant();
-        $user->setRoles(["ROLE_ADMIN"]);
-        $user->setAdministrateur(true);
+        $user->setRoles(["ROLE_PARTICIPANT"]);
+        $user->setAdministrateur(false);
         $user->setActif(true);
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $imageFile = $form->get('image')->getData();
+            $imageFile = $form->get('photo')->getData();
             if ($imageFile)
             {
 
