@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Constraints\Collection;
 
 /**
@@ -39,6 +40,7 @@ class Participant implements UserInterface
     private $password;
 
     /**
+     * @Assert\Length(min=2, minMessage="Nom trop court")
      * @ORM\Column(type="string", length=255)
      */
     private $nom;
@@ -78,6 +80,16 @@ class Participant implements UserInterface
      * @ORM\ManyToMany(targetEntity=Sortie::class, inversedBy="participants")
      */
     private $participantSorties;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $pseudo;
+
+    /**
+     * @ORM\Column(type="string", length=1000, nullable=true)
+     */
+    private $photo;
 
     public function __construct()
     {
@@ -290,6 +302,30 @@ class Participant implements UserInterface
     public function removeParticipantSorty(Sortie $participantSorty): self
     {
         $this->participantSorties->removeElement($participantSorty);
+
+        return $this;
+    }
+
+    public function getPseudo(): ?string
+    {
+        return $this->pseudo;
+    }
+
+    public function setPseudo(string $pseudo): self
+    {
+        $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(?string $photo): self
+    {
+        $this->photo = $photo;
 
         return $this;
     }

@@ -6,6 +6,7 @@ use App\Entity\Participant;
 use Symfony\Component\Form\AbstractType;
 
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
@@ -13,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+use Symfony\Component\Validator\Constraints\File;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -21,6 +23,9 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add('pseudo', TextType::class,[
+                'label' => 'Pseudo *'
+                ])
             ->add('nom', TextType::class,[
                 'label' => 'Nom *'
             ])
@@ -56,6 +61,24 @@ class RegistrationFormType extends AbstractType
                         'max' => 4096,
                     ]),
                 ],
+            ])
+            ->add('photo', FileType::class, [
+                'label'=> 'Image (.jpg, .gif, .png)',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new  File([
+                        'maxSize' => '500000k',
+                        'maxSizeMessage' => 'Fichier trop lourd',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                            'image/gif',
+
+                        ],
+                        'mimeTypesMessage' => 'Format de l\'image non valide'
+                    ])
+                ]
             ])
         ;
     }
