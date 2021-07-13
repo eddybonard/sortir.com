@@ -49,16 +49,9 @@ class Sortie
      */
     private $infoSortie;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Participant::class, inversedBy="organisateurSorties")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $organisateur;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Participant::class, mappedBy="participantSorties")
-     */
-    private $participants;
+
+
 
     /**
      * @ORM\ManyToOne(targetEntity=Campus::class, inversedBy="sorties")
@@ -78,11 +71,20 @@ class Sortie
      */
     private $lieu;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Participant::class, inversedBy="organisateurSorties")
+     */
+    private $organisateur;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Participant::class, mappedBy="participantSorties")
+     */
+    private $participants;
+
     public function __construct()
     {
         $this->participants = new ArrayCollection();
     }
-
 
 
     public function getId(): ?int
@@ -162,6 +164,50 @@ class Sortie
         return $this;
     }
 
+
+
+
+
+
+
+
+
+    public function getCampusOrganisateur(): ?Campus
+    {
+        return $this->campusOrganisateur;
+    }
+
+    public function setCampusOrganisateur(?Campus $campusOrganisateur): self
+    {
+        $this->campusOrganisateur = $campusOrganisateur;
+
+        return $this;
+    }
+
+    public function getEtat(): ?Etat
+    {
+        return $this->etat;
+    }
+
+    public function setEtat(?Etat $etat): self
+    {
+        $this->etat = $etat;
+
+        return $this;
+    }
+
+    public function getLieu(): ?Lieu
+    {
+        return $this->lieu;
+    }
+
+    public function setLieu(?Lieu $lieu): self
+    {
+        $this->lieu = $lieu;
+
+        return $this;
+    }
+
     public function getOrganisateur(): ?Participant
     {
         return $this->organisateur;
@@ -197,42 +243,6 @@ class Sortie
         if ($this->participants->removeElement($participant)) {
             $participant->removeParticipantSorty($this);
         }
-
-        return $this;
-    }
-
-    public function getCampusOrganisateur(): ?Campus
-    {
-        return $this->campusOrganisateur;
-    }
-
-    public function setCampusOrganisateur(?Campus $campusOrganisateur): self
-    {
-        $this->campusOrganisateur = $campusOrganisateur;
-
-        return $this;
-    }
-
-    public function getEtat(): ?Etat
-    {
-        return $this->etat;
-    }
-
-    public function setEtat(?Etat $etat): self
-    {
-        $this->etat = $etat;
-
-        return $this;
-    }
-
-    public function getLieu(): ?Lieu
-    {
-        return $this->lieu;
-    }
-
-    public function setLieu(?Lieu $lieu): self
-    {
-        $this->lieu = $lieu;
 
         return $this;
     }
