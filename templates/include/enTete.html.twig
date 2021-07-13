@@ -3,10 +3,10 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     {% if app.user %}
         <div class="logo">
-            <a href="{{ path('main_home') }}"><img src="{{ asset('img/logo.png') }}" alt="logo"></a>
+            <a href="{{ path('main_accueil') }}"><img src="{{ asset('imageLogo/logoIcon.png') }}" alt="logo"></a>
         </div>
         <div class="nav-item ml-5">
-            <a class=" navbar-brand " href="{{ path('main_home') }}">Bucket-list</a>
+            <a class=" navbar-brand " href="{{ path('main_accueil') }}">Bucket-list</a>
         </div>
     {% endif %}
     <div class="logo">
@@ -25,7 +25,7 @@
                     <div class="container">
                         <ul class="navbar-nav no-wrap me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class=" nav-link active  " href="{{ path('main_home') }}" title="Accueil">Accueil</a>
+                                <a class=" nav-link active  " href="{{ path('main_accueil') }}" title="Accueil">Accueil</a>
                             </li>
                             <li class="nav-item " style="white-space: nowrap;">
                                 <a class=" nav-link  " href="{{ path('main_aboutUs') }}" title="Nous">About Us</a>

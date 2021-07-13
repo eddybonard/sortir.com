@@ -4,8 +4,13 @@
 
 {% block body %}
 
-    <div class="container">
+    <div class="container mt-3">
         <div class="row">
+            <div class="col-lg-6">
+                <div class="logoAgrandis">
+                    <img src="{{ asset('imageLogo/logo.jpg') }}" alt="logoAgrandis">
+                </div>
+            </div>
             <div class="col-lg-6">
                 <form method="post" class="ml-5 w-50">
                     {% if error %}
@@ -14,28 +19,26 @@
 
                     <h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
                     <label for="inputEmail">Email</label>
-                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" placeholder="xxx@gmail.com" required autofocus>
+                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" placeholder="xxx@gmail.com" required autofocus><br>
                     <label for="inputPassword">Mot de passe</label>
                     <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
                     <input type="hidden" name="_csrf_token"
                            value="{{ csrf_token('authenticate') }}"
                     >
                     <div class="checkbox ">
-                        <label for="_remember_me">Se souvenir de moi &nbsp;<input type="checkbox" name="_remember_me"></label>
+                        <label for="_remember_me"><small>Se souvenir de moi</small> &nbsp;<input type="checkbox" name="_remember_me"></label>
+                    </div>
+                    <div class="inscription">
+                        Première visite ? <a href="#">Créer un compte</a>
                     </div>
                     <div>
-                        <a href="{#{{ path('app_forgot_password_request') }}#}">Mot de passe oublié</a>
+                        <a href="{#{{ path('app_forgot_password_request') }}#}">Mot de passe oublié ?</a>
                     </div>
                     <br>
                     <button class="btn btn-lg btn-primary mb-3" type="submit">
                         Connexion
                     </button>
                 </form>
-            </div>
-            <div class="col-lg-6">
-                <div class="logoAgrandis">
-                    <img src="{{ asset('imageLogo/logo.jpg') }}" alt="logoAgrandis">
-                </div>
             </div>
 
         </div>
