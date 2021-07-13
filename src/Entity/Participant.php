@@ -24,6 +24,7 @@ class Participant implements UserInterface
     private $id;
 
     /**
+     * @Assert\NotBlank(message="Champ requis")
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
@@ -41,17 +42,20 @@ class Participant implements UserInterface
 
     /**
      * @Assert\Length(min=2, minMessage="Nom trop court", max=255, maxMessage="Nom trop long")
+     * @Assert\NotBlank(message="Champ requis")
      * @ORM\Column(type="string", length=255)
      */
     private $nom;
 
     /**
      * @Assert\Length(min=2, minMessage="Prenom trop court", max=255, maxMessage="Prenom trop long")
+     * @Assert\NotBlank(message="Champ requis")
      * @ORM\Column(type="string", length=255)
      */
     private $prenom;
 
     /**
+     * @Assert\NotBlank(message="Champ requis")
      * @ORM\Column(type="string", length=255)
      */
     private $telephone;
@@ -68,6 +72,7 @@ class Participant implements UserInterface
 
     /**
     * @ORM\ManyToOne(targetEntity=Campus::class, inversedBy="participants")
+     * @Assert\NotBlank(message="Champ requis")
     * @ORM\JoinColumn(nullable=false)
     */
     private $campus;
@@ -84,6 +89,7 @@ class Participant implements UserInterface
 
     /**
      * @Assert\Length(min=2, minMessage="Pseudo trop court", max=255, maxMessage="Pseudo trop long")
+     * @Assert\NotBlank(message="Champ requis")
      * @ORM\Column(type="string", length=255)
      */
     private $pseudo;
