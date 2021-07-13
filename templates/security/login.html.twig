@@ -29,13 +29,13 @@
                         <label for="_remember_me"><small>Se souvenir de moi</small> &nbsp;<input type="checkbox" name="_remember_me"></label>
                     </div>
                     <div class="inscription">
-                        Première visite ? <a href="#">Créer un compte</a>
+                        Première visite ? <a href="{{ path('register_formulaireInscription') }}">Créer un compte</a>
                     </div>
                     <div>
                         <a href="{#{{ path('app_forgot_password_request') }}#}">Mot de passe oublié ?</a>
                     </div>
                     <br>
-                    <button class="btn btn-lg btn-primary mb-3" type="submit">
+                    <button class="btn btn-lg btn-outline-primary mb-3" type="submit">
                         Connexion
                     </button>
                 </form>

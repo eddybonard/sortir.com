@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - Inscription{% endblock %}
+
+{% block body %}
+    <div class="jumbotron text-center">
+        <h1>Inscription</h1>
+    </div>
+
+    {% form_theme registrationForm 'bootstrap_4_layout.html.twig' %}
+
+    <div class="mr-5 ml-5" style="width: 60%;">
+        {{ form_start(registrationForm) }}
+        {{ form_label(registrationForm.nom) }}
+        {{ form_widget(registrationForm.nom) }}
+
+        {{ form_label(registrationForm.prenom) }}
+        {{ form_widget(registrationForm.prenom) }}
+
+        {{ form_label(registrationForm.email) }}
+        {{ form_widget(registrationForm.email) }}
+
+        {{ form_label(registrationForm.telephone) }}
+        {{ form_widget(registrationForm.telephone) }}
+
+        {{ form_label(registrationForm.plainPassword) }}
+        {{ form_widget(registrationForm.plainPassword) }}
+
+        <button type="submit" class="btn btn-outline-success">Inscription</button>&nbsp;  <button type="reset" class="btn btn-danger">Annuler</button>
+        {{ form_end(registrationForm) }}
+    </div>
+
+{% endblock %}
