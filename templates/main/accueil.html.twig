@@ -4,8 +4,8 @@
 
 {% block body %}
     <div class="jumbotron text-right">
-        <h3>Date du jour : {{ 'now'| date('d/m/Y') }}</h3>
-        <h3>Participant : {{ app.user.prenom }} {{ app.user.nom | upper}} {% if app.user.administrateur == 1 %}(admin){% endif %}</h3>
+        <h4>Date du jour : {{ 'now'| date('d/m/Y') }}</h4>
+        <h4>Participant : {{ app.user.prenom }} {{ app.user.nom | upper}} {% if app.user.administrateur == 1 %}(admin){% endif %}</h4>
 
     </div>
 
