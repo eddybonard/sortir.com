@@ -12,11 +12,12 @@
     <div class="container ">
         <div class="row "  >
             <div class="col-lg-12 mb-2">
-                <div class="card w-50" style="border-radius: 30px; /*border: 1px solid black;*/">
-                <img style="border-radius: 30px;" width="auto" height="auto" src="{{ asset('uploadImage/'~app.user.photo) }}" alt="photo de profil">
+                <div class="text-center">
+                    <img style="clip-path: circle();" width="300"  src="{{ asset('uploadImage/'~app.user.photo) }}" alt="photo de profil">
+                </div>
                     <div class="card-title text-center"><h1>{{ app.user.pseudo }}</h1></div>
                     <div class="card-text ml-3 ">
-                        <div style="width: 60%;">
+                        <div >
                             {{ form_start(modifForm) }}
                             {{ form_label(modifForm.pseudo) }}
                             {{ form_widget(modifForm.pseudo) }}
