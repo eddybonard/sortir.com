@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 class MainController extends AbstractController
@@ -24,6 +25,21 @@ class MainController extends AbstractController
     public function accueil(): Response
     {
         return $this->render('main/accueil.html.twig');
+    }
+
+    /**
+     * @Route("/delete/profil{id}",  name="main_suprimmer",  requirements={"id":"\d+"})
+     */
+    public function suprimmerProfil(Participant $participant, EntityManagerInterface $entityManager, AuthenticationUtils $authenticationUtils)
+    {
+        $error = $authenticationUtils->getLastAuthenticationError();
+        $entityManager->remove($participant);
+        $entityManager->flush();
+
+        $this->addFlash('danger', 'Votre compte à bien été supprimer');
+        return $this->render('security/login.html.twig', ['error' => $error] );
+
+
     }
 
     /**
@@ -88,4 +104,6 @@ class MainController extends AbstractController
         ]);
 
     }
+
+
 }

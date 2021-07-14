@@ -15,8 +15,8 @@
                 <div class="text-center">
                     <img style="clip-path: circle();" width="300"  src="{{ asset('uploadImage/'~app.user.photo) }}" alt="photo de profil">
                 </div>
-                    <div class="card-title text-center"><h1>{{ app.user.pseudo }}</h1></div>
-                    <div class="card-text ml-3 ">
+                    <div class="text-center"><h1>{{ app.user.pseudo }}</h1></div>
+                    <div class=" ml-3 ">
                         <div >
                             {{ form_start(modifForm) }}
                             {{ form_label(modifForm.pseudo) }}
@@ -45,7 +45,7 @@
                             {{ form_widget(modifForm.password) }}
 
                             <div class="mt-2 mb-2">
-                                <button  class="btn btn-outline-warning ">Modifier</button>&nbsp<button type="reset" class="btn btn-danger">Supprimer mon compte</button>
+                                <button  class="btn btn-outline-warning ">Modifier</button>&nbsp <a href="{{ path("main_suprimmer", {'id': app.user.id}) }}" class="btn btn-danger">Supprimer mon compte</a>
                             </div>
                             {{ form_end(modifForm) }}
                          </div>
