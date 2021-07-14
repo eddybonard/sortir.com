@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Participant;
+use App\Entity\Sortie;
 use App\Form\ModifProfilType;
+use App\Form\RegistrationFormType;
+use App\Form\SortieType;
 use App\Repository\ParticipantRepository;
 use App\Security\AppAuthentificationAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
@@ -111,9 +114,15 @@ class MainController extends AbstractController
     /**
      * @Route("/accueil/sortie" , name="main_sortie")
      */
-    public function creerSortie()
+    public function creerSortie(Request $request)
     {
-        return $this->render('main/sortie.html.twig');
+        $sortie = new Sortie();
+        $form = $this->createForm(SortieType::class, $sortie);
+        $form->handleRequest($request);
+
+        return $this->render('main/sortie.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 
 

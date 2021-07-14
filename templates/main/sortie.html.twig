@@ -6,5 +6,36 @@
     <div class="jumbotron text-center">
         <h1>Créer une sortie</h1>
     </div>
+    {% form_theme form 'bootstrap_4_layout.html.twig' %}
+    {{ form_start(form) }}
+    {{ form_label(form.nom) }}
+    {{ form_widget(form.nom) }}
 
+    {{ form_label(form.dateHeureDebut) }}
+    {{ form_widget(form.dateHeureDebut) }}
+
+    {{ form_label(form.dateLimiteInscription) }}
+    {{ form_widget(form.dateLimiteInscription) }}
+
+    {{ form_label(form.nbInscriptionMax) }}
+    {{ form_widget(form.nbInscriptionMax) }}
+
+    {{ form_label(form.duree) }}
+    {{ form_widget(form.duree) }}
+
+    {{ form_label(form.infoSortie) }}
+    {{ form_widget(form.infoSortie) }}
+
+    {{ form_label(form.campusOrganisateur) }}
+    {{ form_widget(form.campusOrganisateur) }}
+
+{#    {{ form_label(form.ville) }}
+    {{ form_widget(form.ville) }}
+
+    {{ form_label(form.codePostal) }}
+    {{ form_widget(form.codePostal) }}#}
+    <div class="mt-2">
+        <button type="submit" class="btn btn-outline-success ">Inscription</button>&nbsp;  <button type="reset" class="btn btn-danger">Annuler</button>
+    </div>
+    {{ form_end(form) }}
 {% endblock %}
