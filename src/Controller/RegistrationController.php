@@ -28,28 +28,37 @@ class RegistrationController extends AbstractController
         $user = new Participant();
         $user->setRoles(["ROLE_PARTICIPANT"]);
         $user->setAdministrateur(false);
+
         $user->setActif(true);
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $imageFile = $form->get('photo')->getData();
-            if ($imageFile)
+            if ($form->get('photo')->getData() == null)
             {
-
-                $originalImageName = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeImageName =$slugger->slug($originalImageName);
-                $imageName = $safeImageName.'-'.uniqid().'.'.$imageFile->guessExtension();
-                try {
-                    $imageFile->move(
-                        $this->getParameter('brochures_directory'),
-                        $imageName);
-                }catch (FileException$e)
-                {
-                    return $e->getTrace();
-                }
-                $user->setPhoto($imageName);
+                $user->setPhoto('avatarDefault.jpg');
             }
+            else{
+                $imageFile = $form->get('photo')->getData();
+                if ($imageFile)
+                {
+
+                    $originalImageName = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                    $safeImageName =$slugger->slug($originalImageName);
+                    $imageName = $safeImageName.'-'.uniqid().'.'.$imageFile->guessExtension();
+                    try {
+                        $imageFile->move(
+                            $this->getParameter('brochures_directory'),
+                            $imageName);
+                    }catch (FileException$e)
+                    {
+                        return $e->getTrace();
+                    }
+                    $user->setPhoto($imageName);
+                }
+
+            }
+
             $user->setPassword(
                 $passwordEncoder->encodePassword(
                     $user,

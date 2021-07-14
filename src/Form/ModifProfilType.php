@@ -9,12 +9,15 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Core\Validator\Constraints\UserPassword;
 use Symfony\Component\Validator\Constraints\File;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ModifProfilType extends AbstractType
 {
@@ -58,14 +61,38 @@ class ModifProfilType extends AbstractType
                 'class'=> Campus::class,
                 'choice_label' => 'nom'
             ])
-            ->add('password', PasswordType::class,[
-                'constraints' => [
-                    new UserPassword([
-                        'message' => 'Mot de passe un correct'
-                    ])
+            ->add('password', RepeatedType::class, [
+                'type' => PasswordType::class,
+                'invalid_message' => 'Les mots de passe ne sont pas identique',
+                'first_options' => [
+                    'label' => 'Mot de passe actuel *',
+                    'constraints' => [
+                        new UserPassword([
+                                'message' => 'Mot de pass un correct'
+                            ]
+
+                        )
+
+                    ],
+
                 ],
-                'label' => 'Mot de passe actuel *',
-                'invalid_message' => 'Mot de passe incorrect'
+                'second_options' => [
+                    'label'=>'Confirmation mot de passe *'
+                ],
+                'label' => false,
+                'mapped' => false,
+                'attr' => ['autocomplete' => 'new-password'],
+                'constraints' => [
+                    new NotBlank([
+                        'message' => 'Mot de passe requis',
+                    ]),
+                    new Length([
+                        'min' => 6,
+                        'minMessage' => 'Mot de passe trop court ! 6 caractères minimum',
+                        'maxMessage' => 'Mot de passe trop long ! 4096 caractères maximum',
+                        'max' => 4096,
+                    ]),
+                ],
             ])
         ;
     }

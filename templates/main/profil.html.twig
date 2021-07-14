@@ -3,52 +3,56 @@
 {% block title %}{{ parent() }} - Profil{% endblock %}
 
 {% block body %}
-    <div class="jumbotron text-center">
-        <h1>Modification de profil</h1>
+    <div class="jumbotron text-center bg-warning">
+        <h1>Modification du profil</h1>
     </div>
 
     {% form_theme modifForm 'bootstrap_4_layout.html.twig' %}
 
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <div class="card">
-                <img src="{{ asset('uploadImage/'~app.user.photo) }}" alt="photo de profil">
-                    <div class="card-title">{{ app.user.pseudo }}</div>
-                    <div></div>
+    <div class="container ">
+        <div class="row "  >
+            <div class="col-lg-12 mb-2">
+                <div class="card w-50" style="border-radius: 30px; /*border: 1px solid black;*/">
+                <img style="border-radius: 30px;" width="auto" height="auto" src="{{ asset('uploadImage/'~app.user.photo) }}" alt="photo de profil">
+                    <div class="card-title text-center"><h1>{{ app.user.pseudo }}</h1></div>
+                    <div class="card-text ml-3 ">
+                        <div style="width: 60%;">
+                            {{ form_start(modifForm) }}
+                            {{ form_label(modifForm.pseudo) }}
+                            {{ form_widget(modifForm.pseudo) }}
+
+                            {{ form_label(modifForm.nom) }}
+                            {{ form_widget(modifForm.nom) }}
+
+                            {{ form_label(modifForm.prenom) }}
+                            {{ form_widget(modifForm.prenom) }}
+
+                            {{ form_label(modifForm.email) }}
+                            {{ form_widget(modifForm.email) }}
+
+                            {{ form_label(modifForm.telephone) }}
+                            {{ form_widget(modifForm.telephone) }}
+
+                            {{ form_label(modifForm.campus) }}
+                            {{ form_widget(modifForm.campus) }}
+
+                            {{ form_label(modifForm.photo) }}
+                            {{ form_widget(modifForm.photo) }}
+
+
+                            {{ form_label(modifForm.password) }}
+                            {{ form_widget(modifForm.password) }}
+
+                            <div class="mt-2 mb-2">
+                                <button  class="btn btn-outline-warning ">Modifier</button>&nbsp<button type="reset" class="btn btn-danger">Supprimer mon compte</button>
+                            </div>
+                            {{ form_end(modifForm) }}
+                         </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="mr-5 ml-5" style="width: 60%;">
-        {{ form_start(modifForm) }}
-        {{ form_label(modifForm.pseudo) }}
-        {{ form_widget(modifForm.pseudo) }}
 
-        {{ form_label(modifForm.nom) }}
-        {{ form_widget(modifForm.nom) }}
-
-        {{ form_label(modifForm.prenom) }}
-        {{ form_widget(modifForm.prenom) }}
-
-        {{ form_label(modifForm.email) }}
-        {{ form_widget(modifForm.email) }}
-
-        {{ form_label(modifForm.telephone) }}
-        {{ form_widget(modifForm.telephone) }}
-
-        {{ form_label(modifForm.password) }}
-        {{ form_widget(modifForm.password) }}
-
-        {{ form_label(modifForm.campus) }}
-        {{ form_widget(modifForm.campus) }}
-
-        {{ form_label(modifForm.photo) }}
-        {{ form_widget(modifForm.photo) }}
-        <div class="mt-2">
-            <button type="submit" class="btn btn-outline-success ">Modifier</button>&nbsp<button type="reset" class="btn btn-danger">Supprimer mon compte</button>
-        </div>
-        {{ form_end(modifForm) }}
     </div>
 
 {% endblock %}
