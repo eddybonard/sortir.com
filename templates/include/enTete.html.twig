@@ -38,7 +38,7 @@
                                 <a class=" nav-link active " href="{{ path('main_accueil') }}" title="Accueil">Accueil</a>
                             </li>
                             <li class="nav-item" style="white-space: nowrap">
-                                <a class=" nav-link " href="#" title="Mon Profil">Mon Profil</a>
+                                <a class=" nav-link " href="{{ path('main_profil', {'id' : app.user.id}) }}" title="Mon Profil">Mon Profil</a>
                             </li>
                             <li class="nav-item" style="white-space: nowrap">
                                 <a class=" nav-link " href="{{ path('app_logout') }}" title="Se Deconnecter">Se Deconnecter</a>
