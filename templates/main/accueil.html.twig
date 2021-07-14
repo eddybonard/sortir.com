@@ -5,7 +5,27 @@
 {% block body %}
     <div class="jumbotron text-right">
         <h4>Date du jour : {{ 'now'| date('d/m/Y') }}</h4>
-        <h4>Participant : {{ app.user.prenom | capitalize }} {{ app.user.nom | slice(0,1)}}. {% if app.user.administrateur == 1 %}(admin){% endif %}</h4>
+        <h4>Participant : {{ app.user.prenom | capitalize }} {{ app.user.nom | slice(0,1) | capitalize}}. {% if app.user.administrateur == 1 %}(admin){% endif %}</h4>
+    </div>
+
+    <section>
+        <div>
+            <form name="filtre" class="name" id="name">
+                <fieldset>
+                    <legend>Filtrer les sorties</legend>
+                    <label for="campus">Campus</label><select id="campus" name="campus" ></select><br>
+                    <label for="debut">Entre</label>&nbsp;<input type="date" name="debut" id="debut">&nbsp;<label for="fin"> et</label>&nbsp;<input
+                            type="date" name="fin" id="fin"><br>
+                    <button type="button" class="btn btn-outline-primary">Rechercher</button>
+
+                </fieldset>
+
+            </form>
+        </div>
+    </section>
+
+    <div>
+        <a class="btn btn-secondary" href="{{ path('main_sortie') }}">Créer une sortie</a>
     </div>
 
 {% endblock %}

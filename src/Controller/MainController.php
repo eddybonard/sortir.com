@@ -7,6 +7,7 @@ use App\Form\ModifProfilType;
 use App\Repository\ParticipantRepository;
 use App\Security\AppAuthentificationAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,16 +29,18 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/delete/profil{id}",  name="main_suprimmer",  requirements={"id":"\d+"})
+     * @Route("/delete/profil{id}",  name="main_suprimmer")
+     * @ParamConverter("participant", class="App\Entity\Participant")
      */
     public function suprimmerProfil(Participant $participant, EntityManagerInterface $entityManager, AuthenticationUtils $authenticationUtils)
     {
         $error = $authenticationUtils->getLastAuthenticationError();
+        $lastUsername = $authenticationUtils->getLastUsername();
         $entityManager->remove($participant);
         $entityManager->flush();
 
         $this->addFlash('danger', 'Votre compte à bien été supprimer');
-        return $this->render('security/login.html.twig', ['error' => $error] );
+        return $this->render('security/login.html.twig', ['last_username' => $lastUsername,'error' => $error] );
 
 
     }
@@ -103,6 +106,14 @@ class MainController extends AbstractController
             'modifForm' => $modificationForm->createView(),
         ]);
 
+    }
+
+    /**
+     * @Route("/accueil/sortie" , name="main_sortie")
+     */
+    public function creerSortie()
+    {
+        return $this->render('main/sortie.html.twig');
     }
 
 
