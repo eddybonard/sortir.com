@@ -1,0 +1,75 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - Ville (admin){% endblock %}
+
+{% block body %}
+
+    <div class="jumbotron bg-warning text-center">
+        <h1>Gérer les villes</h1>
+    </div>
+
+    <section class="mb-4" style=" display: flex; justify-content:space-between;">
+        <div>
+            <p>&nbsp;</p>
+        </div>
+        <div class="w-50" style="
+            border-radius: 30px;
+            background: #AAAAAA;
+            ">
+            <form action ='{{ path('main_adminVille') }}' method="post">
+                <fieldset>
+                    <legend class="ml-1">Filtrer les villes</legend>
+                    <label for="ville">Le nom de la ville contient : </label><input class="form-control" type="search" name="ville" id="ville" placeholder="..."><br>
+                    <button type="submit" class="btn btn-primary">Recherche</button>
+                </fieldset>
+            </form>
+        </div>
+        <div>
+            <p>&nbsp;</p>
+        </div>
+    </section>
+
+    <section class="mb-4" style=" display: flex; justify-content:space-between;">
+        <div>
+            <p>&nbsp;</p>
+        </div>
+        <div class="mb-3 pr-5 pl-5 pt-5 pb-5 " style="font-size:1em;
+        border-radius: 100px;
+        box-shadow: 10px 10px 20px;
+        background: #AAAAAA;
+            " >
+            <table class="text-center" >
+                <thead>
+                    <tr>
+                        <th>Ville</th>
+                        <th>Code Postal</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody style="overflow-y: scroll;">
+                {% for ville in villes %}
+                    <tr >
+                            <td>{{ ville.nom | upper}}</td>
+                            <td>{{ ville.codePostal }}</td>
+                            <td><a href="#"  class="btn btn-outline-danger">Suprimmer</a></td>
+                    </tr>
+                    {% endfor %}
+                <tr >
+                    <form action="{{ path('main_adminVille') }}" method="post">
+                        <td><input type="text" class="form-control" id="nom" name="nom"></td>
+                        <td><input type="number" class="form-control" id="codePostal" name="codePostal"></td>
+                        <td><button type="submit" class="btn btn-primary" >Ajouter</button></td>
+                    </form>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div>
+            <p>&nbsp;</p>
+        </div>
+    </section>
+
+{% endblock %}
+
+
+
