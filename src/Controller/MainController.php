@@ -114,11 +114,38 @@ class MainController extends AbstractController
     /**
      * @Route("/accueil/sortie" , name="main_sortie")
      */
-    public function creerSortie(Request $request)
+    public function creerSortie(Request $request, EntityManagerInterface $entityManager)
     {
         $sortie = new Sortie();
         $form = $this->createForm(SortieType::class, $sortie);
         $form->handleRequest($request);
+
+
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $safe= $request->request->get('safe');
+            $publier = $request->request->get('publier');
+
+            if ($safe == true)
+            {
+                $sortie->setEtat(3);
+                $entityManager->persist($sortie);
+                $entityManager->flush();
+
+                $this->addFlash('sucess', 'Sortie sauvegardée');
+                return $this->redirectToRoute('main_accueil');
+            }
+            else{
+                $sortie->setEtat(4);
+                $entityManager->persist($sortie);
+                $entityManager->flush();
+
+                $this->addFlash('sucess', 'Sortie publiée');
+                return $this->redirectToRoute('main_accueil');
+            }
+        }
+
 
         return $this->render('main/sortie.html.twig', [
             'form' => $form->createView(),

@@ -36,7 +36,8 @@
                      {{ form_label(form.lieu) }}
                      {{ form_widget(form.lieu) }}
                         <div class="mt-2 mb-2 text-center">
-                            <button type="submit" class="btn btn-outline-success ">Inscription</button>&nbsp;  <button type="reset" class="btn btn-danger">Annuler</button>
+                            <button type="submit" class="btn btn-outline-success " value="safe">Sauvegarder</button>&nbsp;<button type="submit" class="btn btn-outline-primary" value="publier">Publier</button>
+                            <a href="{{ path('main_accueil') }}" class="btn btn-danger">Annuler</a>
                         </div>
                         {{ form_end(form) }}
                  </div>

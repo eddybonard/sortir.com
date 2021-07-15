@@ -38,6 +38,7 @@ class SortieType extends AbstractType
             ])
             ->add('duree', NumberType::class, [
                 'label' => 'Dureé : '
+
             ])
             ->add('infoSortie', TextareaType::class,[
                 'label' => 'Description et infos :',
