@@ -14,8 +14,11 @@
                 <fieldset>
                     <legend>Filtrer les sorties</legend>
                     <label for="campus">Campus</label><select id="campus" name="campus" ></select><br>
-                    <label for="debut">Entre</label>&nbsp;<input type="date" name="debut" id="debut">&nbsp;<label for="fin"> et</label>&nbsp;<input
+                    <label for="debut">Entre</label>&nbsp;<input class="form-control" type="date" name="debut" id="debut">&nbsp;<label for="fin"> et</label>&nbsp;<input
                             type="date" name="fin" id="fin"><br>
+                    <input type="hidden" name="_csrf_token"
+                           value="{{ csrf_token('authenticate') }}"
+                    >
                     <button type="button" class="btn btn-outline-primary">Rechercher</button>
 
                 </fieldset>
