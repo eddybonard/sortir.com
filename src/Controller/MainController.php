@@ -39,12 +39,7 @@ class MainController extends AbstractController
     {
         $error = $authenticationUtils->getLastAuthenticationError();
         $lastUsername = $authenticationUtils->getLastUsername();
-        $participant->setActif(false);
-        $participant->setPrenom('Inconnu');
-        $participant->setNom('Inconnu');
-        $participant->setEmail('Suprimmee');
-        $participant->setPassword('Suprimmee');
-        $entityManager->persist($participant);
+        $entityManager->remove($participant);
         $entityManager->flush();
 
         $this->addFlash('danger', 'Votre compte à bien été supprimer');

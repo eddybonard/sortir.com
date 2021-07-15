@@ -8,14 +8,14 @@
         <h4>Participant : {{ app.user.prenom | capitalize }} {{ app.user.nom | slice(0,1) | capitalize}}. {% if app.user.administrateur == 1 %}(admin){% endif %}</h4>
     </div>
 
-    <section>
-        <div>
-            <form name="filtre" class="name" id="name">
+    <section class="w-50">
+        <div >
+            <form name="filtre" class="name " id="name">
                 <fieldset>
                     <legend>Filtrer les sorties</legend>
-                    <label for="campus">Campus</label><select id="campus" name="campus" ></select><br>
+                    <label for="campus">Campus</label><select class="form-control" id="campus" name="campus" ></select><br>
                     <label for="debut">Entre</label>&nbsp;<input class="form-control" type="date" name="debut" id="debut">&nbsp;<label for="fin"> et</label>&nbsp;<input
-                            type="date" name="fin" id="fin"><br>
+                            class="form-control"  type="date" name="fin" id="fin"><br>
                     <input type="hidden" name="_csrf_token"
                            value="{{ csrf_token('authenticate') }}"
                     >
