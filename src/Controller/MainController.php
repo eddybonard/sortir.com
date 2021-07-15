@@ -42,7 +42,7 @@ class MainController extends AbstractController
         $entityManager->remove($participant);
         $entityManager->flush();
 
-        $this->addFlash('danger', 'Votre compte à bien été supprimer');
+        $this->addFlash('danger', 'Votre compte à bien été supprimé');
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername,'error' => $error] );
 
 

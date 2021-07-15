@@ -40,42 +40,19 @@ class SortieType extends AbstractType
                 'label' => 'Dureé : '
             ])
             ->add('infoSortie', TextareaType::class,[
-                'label' => 'Description et infos :'
+                'label' => 'Description et infos :',
+                'attr' => ['style' => 'resize:none;']
+
             ] )
             ->add('campusOrganisateur', EntityType::class, [
                 'class' => Campus::class,
                     'choice_label' => 'nom'
 
-
-
             ])
-           /* ->add('ville', EntityType::class, [
-                'class' =>Ville::class,
-                    'choice_label' =>'nom'
+            ->add('lieu', LieuType::class,[
+                'label' =>false
+            ])
 
-            ])*/
-            /*->add('lieu', EntityType::class, [
-        'class' =>Ville::class, [
-            'label' =>'nom'
-                    ]
-        ])*/
-           /* ->add('rue', EntityType::class, [
-                'class' =>Ville::class, [
-                    'label' =>'nom'
-                ])*/
-            /*->add('codePostal', EntityType::class, [
-                'class' =>Ville::class,
-                    'label' =>'code_Postal'
-
-                ])*/
-            /*->add('latitude', EntityType::class, [
-                'class' =>Ville::class, [
-                    'label' =>'nom'
-                ])
-            ->add('longitude', EntityType::class, [
-                'class' =>Ville::class, [
-                    'label' =>'nom'
-                ])*/
         ;
     }
 
