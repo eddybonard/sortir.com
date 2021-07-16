@@ -19,8 +19,8 @@
                             <input type="hidden" name="_csrf_token"
                                    value="{{ csrf_token('authenticate') }}"
                             >
-                            <button type="button" class="btn btn-primary" >Rechercher</button>
-                            <a style=" white-space: nowrap" class="btn btn-success" href="{{ path('main_sortie', {'id': app.user.id}) }}">Créer une sortie</a>
+                            <button type="button" class="btn btn-primary mb-2" >Rechercher</button>
+                            <a style=" white-space: nowrap" class="btn btn-success" href="{{ path('sortie_creation') }}">Créer une sortie</a>
                         </fieldset>
                     </form>
                 </div>
@@ -39,7 +39,7 @@
                                                 Etat : {#{{ sortie.etat  }}#}<br>
                                                 Organisateur : {#{{ sortie.organisateur }}#}</p>
                                             {#{% if app.user.id == sortie.organisateur %}#}
-                                            <a href="#" class="btn btn-primary">Modifier</a>
+                                            <a href="{{ path('sortie_modifier', {'id':sortie.id}) }}" class="btn btn-primary">Modifier</a>
                                             {# {% else %}#}
                                             <a href="#" class="btn btn-primary">Afficher</a>
                                             {#    {% endif %}#}
