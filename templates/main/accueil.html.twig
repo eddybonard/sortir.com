@@ -25,15 +25,35 @@
                         </fieldset>
                     </form>
                 </div>
-                <div class="col-lg-6">
-                    &nbsp;
+                    {% for sortie in sorties %}
+                        <div class="col-lg-3">
+                                <div class="card">
+                                        <img src="{{ asset('uploadImage/' ~ sortie.photo) }}" alt="description">
+                                    <div class="card-body">
+                                        <div class="card-title"><h3>{{ sortie.nom }}</h3> </div>
+                                        <div class="card-text">
+                                            <p>Date de début : {{ sortie.dateHeureDebut | date('d/m/Y') }}<br>
+                                               Clôture :  {{ sortie.dateLimiteInscription | date('d/m/Y') }}<br>
+                                            Places : /{{ sortie.nbInscriptionMax }}<br>
+                                            Etat : {#{{ sortie.etat  }}#}<br>
+                                            Organisateur : {#{{ sortie.organisateur }}#}</p>
+                                            {#{% if app.user.id == sortie.organisateur %}#}
+                                                <a href="#" type="btn btn-primary">Modifier</a>
+                                           {# {% else %}#}
+                                                <a href="#" type="btn btn-primary">Afficher</a>
+                                        {#    {% endif %}#}
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
     </section>
 
-    <div class="text-center mb-3">
-        <a style="font-size:20px;" class="btn btn-outline-secondary  w-50" href="{{ path('main_sortie') }}">Créer une sortie</a>
+    <div class="text-center mb-3 mt-3">
+        <a style="font-size:20px;" class="btn btn-outline-secondary  w-50" href="{{ path('main_sortie', {'id': app.user.id}) }}">Créer une sortie</a>
     </div>
 
 {% endblock %}

@@ -49,7 +49,7 @@
                 {% for campus in campus %}
                     <tr >
                         <td>{{ campus.nom | upper}}</td>
-                        <td><a href="#"  class="btn btn-outline-danger">Suprimmer</a></td>
+                        <td><a href="#"  class="btn btn-outline-danger" onclick="supprimerCampus()" >Supprimer</a></td>
                     </tr>
                 {% endfor %}
                 <tr >

@@ -3,17 +3,21 @@
 namespace App\Form;
 
 use App\Entity\Campus;
+use App\Entity\Etat;
+use App\Entity\Lieu;
 use App\Entity\Sortie;
 use App\Entity\Ville;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\File;
 
 class SortieType extends AbstractType
 {
@@ -50,8 +54,31 @@ class SortieType extends AbstractType
                     'choice_label' => 'nom'
 
             ])
-            ->add('lieu', LieuType::class,[
-                'label' =>false
+            ->add('lieu', EntityType::class, [
+                'class' => Lieu::class,
+                'choice_label' => 'nom'
+            ])
+            ->add('photo', FileType::class, [
+                'label'=> 'Photo (.jpg, .gif, .png)',
+                'mapped' => false,
+                'required' => false,
+                'constraints' => [
+                    new  File([
+                        'maxSize' => '500000k',
+                        'maxSizeMessage' => 'Fichier trop lourd',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                            'image/gif',
+
+                        ],
+                        'mimeTypesMessage' => 'Format de l\'image non valide'
+                    ])
+                ]
+            ])
+            ->add('etat', EntityType::class, [
+                'class' => Etat::class,
+                'choice_label' => 'libelle'
             ])
 
         ;

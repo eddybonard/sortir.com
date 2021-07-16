@@ -3,15 +3,18 @@
 namespace App\Controller;
 
 use App\Entity\Etat;
+use App\Entity\Lieu;
 use App\Entity\Participant;
 use App\Entity\Sortie;
 use App\Entity\Ville;
+use App\Form\LieuType;
 use App\Form\ModifProfilType;
 use App\Form\RegistrationFormType;
 use App\Form\SortieType;
 use App\Repository\CampusRepository;
 use App\Repository\EtatRepository;
 use App\Repository\ParticipantRepository;
+use App\Repository\SortieRepository;
 use App\Repository\VilleRepository;
 use App\Security\AppAuthentificationAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
@@ -32,9 +35,13 @@ class MainController extends AbstractController
     /**
      * @Route("/accueil", name="main_accueil")
      */
-    public function accueil(): Response
+    public function accueil(SortieRepository $sortieRepository): Response
     {
-        return $this->render('main/accueil.html.twig');
+        $sorties = $sortieRepository->findAll();
+
+        return $this->render('main/accueil.html.twig', [
+            'sorties'=>$sorties
+        ]);
     }
 
     /**
@@ -119,43 +126,78 @@ class MainController extends AbstractController
     }
 
     /**
-     * @Route("/accueil/sortie" , name="main_sortie")
+     * @Route("/accueil/sortie/{id}" , name="main_sortie")
+     * @ParamConverter("participant", options={"mapping": {"id"   : "id"}})
      */
-    public function creerSortie(Request $request, EntityManagerInterface $entityManager,  EtatRepository $etatRepository, UserInterface  $user)
+    public function creerSortie( Participant $participant,
+                                 Request $request,
+                                 EntityManagerInterface $entityManager,
+                                 EtatRepository $etatRepository,
+                                 UserInterface  $user,
+                                SluggerInterface $slugger,
+                                SortieRepository $sortieRepository)
     {
         $sortie = new Sortie();
-        $form = $this->createForm(SortieType::class, $sortie);
-        $form->handleRequest($request);
+        $lieu = new Lieu();
+        $formLieu = $this->createForm(LieuType::class, $lieu);
+        $formSortie = $this->createForm(SortieType::class, $sortie);
+        $formLieu->handleRequest($request);
+        $formSortie->handleRequest($request);
 
 
 
-        if($form->isSubmitted() && $form->isValid())
+        if($formSortie->isSubmitted() && $formSortie->isValid())
         {
-            $etat = new Etat();
-            $safe= $request->request->get('safe');
-            $publier = $request->request->get('publier');
-
-            if ($safe === true)
+            if ($formSortie->get('photo')->getData() == null)
             {
-                $sortie->setEtat($etat);
+                $sortie->setPhoto('eni.png');
+            }
+            $imageFile = $formSortie->get('photo')->getData();
+            if ($imageFile)
+            {
+
+                $originalImageName = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $safeImageName =$slugger->slug($originalImageName);
+                $imageName = $safeImageName.'-'.uniqid().'.'.$imageFile->guessExtension();
+                try {
+                    $imageFile->move(
+                        $this->getParameter('brochures_directory'),
+                        $imageName);
+                }catch (FileException$e)
+                {
+                    return $e->getTrace();
+                }
+                $sortie->setPhoto($imageName);
+            }
+
+
+                $sortie->setOrganisateur($participant);
                 $entityManager->persist($sortie);
                 $entityManager->flush();
 
-                $this->addFlash('success', 'Sortie sauvegardée');
-                return $this->redirectToRoute('main_accueil');
-            }
-           else{
+                $sorties = $sortieRepository->findAll();
+                $this->addFlash('success', 'Votre sortie à bien été créée');
+                return $this->redirectToRoute('main_accueil', [
+                    'sorties' => $sorties
+                ]);
+        }
 
-                $entityManager->persist($sortie);
+        if($formLieu->isSubmitted() && $formLieu->isValid())
+        {
+                $entityManager->persist($lieu);
                 $entityManager->flush();
-                $this->addFlash('success', 'Sortie publiée');
-                return $this->redirectToRoute('main_accueil');
-            }
+
+                $this->addFlash('success', 'Lieu créer');
+                return $this->redirectToRoute('main_sortie', [
+                    'id'=>$participant->getId()
+                ]);
+
         }
 
 
         return $this->render('main/sortie.html.twig', [
-            'formSortie' => $form->createView(),
+            'formSortie' => $formSortie->createView(),
+            'formLieu' =>$formLieu->createView(),
         ]);
     }
 

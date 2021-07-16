@@ -22,7 +22,7 @@ class LieuType extends AbstractType
                 'required' => true
             ])
             ->add('nom', TextType::class, [
-                'label' => 'Lieu : ',
+                'label' => 'Nom : ',
                 'required' => true
             ])
             ->add('rue', TextType::class, [

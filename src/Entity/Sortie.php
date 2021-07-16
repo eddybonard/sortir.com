@@ -6,6 +6,7 @@ use App\Repository\SortieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=SortieRepository::class)
@@ -25,6 +26,7 @@ class Sortie
     private $nom;
 
     /**
+     * @Assert\GreaterThanOrEqual(propertyPath="dateLimiteInscription")
      * @ORM\Column(type="datetime")
      */
     private $dateHeureDebut;
@@ -35,6 +37,7 @@ class Sortie
     private $duree;
 
     /**
+     *
      * @ORM\Column(type="datetime")
      */
     private $dateLimiteInscription;
@@ -80,6 +83,11 @@ class Sortie
      * @ORM\ManyToMany(targetEntity=Participant::class, mappedBy="participantSorties")
      */
     private $participants;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $photo;
 
     public function __construct()
     {
@@ -243,6 +251,18 @@ class Sortie
         if ($this->participants->removeElement($participant)) {
             $participant->removeParticipantSorty($this);
         }
+
+        return $this;
+    }
+
+    public function getPhoto(): ?string
+    {
+        return $this->photo;
+    }
+
+    public function setPhoto(?string $photo): self
+    {
+        $this->photo = $photo;
 
         return $this;
     }

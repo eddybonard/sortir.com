@@ -8,7 +8,7 @@
     </div>
     <div class="container ">
         <div class="row "  >
-             <div class="col-lg-12 mb-2">
+             <div class="col-lg-6 mb-2">
                  <div class="w-50">
                         {% form_theme formSortie 'bootstrap_4_layout.html.twig' %}
                         {{ form_start(formSortie) }}
@@ -32,9 +32,16 @@
 
                         {{ form_label(formSortie.campusOrganisateur) }}
                         {{ form_widget(formSortie.campusOrganisateur) }}
-                    <br>
+
                      {{ form_label(formSortie.lieu) }}
                      {{ form_widget(formSortie.lieu) }}
+
+                     {{ form_label(formSortie.photo) }}
+                     {{ form_widget(formSortie.photo) }}
+
+                     {{ form_label(formSortie.etat) }}
+                     {{ form_widget(formSortie.etat) }}
+
                         <div class="mt-2 mb-2 text-center">
                             <button type="submit" class="btn btn-outline-success " value="{{ app.user.id }}">Sauvegarder</button>&nbsp;<button class="btn btn-outline-primary" value="publier" onclick="publierSortie()">Publier</button>
                             <a href="{{ path('main_accueil') }}" class="btn btn-danger">Annuler</a>
@@ -44,6 +51,44 @@
                         {{ form_end(formSortie) }}
                  </div>
              </div>
+            <hr>
+            <div class="col-lg-6 mb-2">
+                <div class="w-50 text-center">
+                    <h1>Ajouter un lieu</h1>
+                    {% form_theme formLieu 'bootstrap_4_layout.html.twig' %}
+                    {{ form_start(formLieu) }}
+
+                        {{ form_label(formLieu.nom) }}
+                        {{ form_widget(formLieu.nom) }}
+
+                        {{ form_label(formLieu.ville) }}
+                        {{ form_widget(formLieu.ville) }}
+
+
+                        {{ form_label(formLieu.rue) }}
+                        {{ form_widget(formLieu.rue) }}
+
+                        {{ form_label(formLieu.latitude) }}
+                        {{ form_widget(formLieu.latitude) }}
+
+                        {{ form_label(formLieu.longitude) }}
+                        {{ form_widget(formLieu.longitude) }}
+
+                        <div class="mt-2 mb-2 text-center">
+                            <button style="border: none; background:none;" type="submit" value="{{ app.user.id }}" >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" color="green" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                    <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                                </svg>
+                            </button>
+
+
+                        </div>
+                        <input type="hidden" name="_csrf_token"
+                               value="{{ csrf_token('authenticate') }}">
+                    {{ form_end(formLieu) }}
+                </div>
+            </div>
         </div>
     </div>
 

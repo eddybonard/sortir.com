@@ -12,3 +12,17 @@ function modifierProfil()
 {
     window.confirm('Etes-vous sur de vouloir modifier votre profil ?')
 }
+
+function supprimerVille() {
+
+
+    window.confirm('Etes-vous sur de vouloir supprimer cette ville ?')
+
+}
+
+function supprimerCampus() {
+
+
+    window.confirm('Etes-vous sur de vouloir supprimer ce campus ?')
+
+}
