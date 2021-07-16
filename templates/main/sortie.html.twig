@@ -10,38 +10,38 @@
         <div class="row "  >
              <div class="col-lg-12 mb-2">
                  <div class="w-50">
-                        {% form_theme form 'bootstrap_4_layout.html.twig' %}
-                        {{ form_start(form) }}
-                        {{ form_label(form.nom) }}
-                        {{ form_widget(form.nom) }}
+                        {% form_theme formSortie 'bootstrap_4_layout.html.twig' %}
+                        {{ form_start(formSortie) }}
+                        {{ form_label(formSortie.nom) }}
+                        {{ form_widget(formSortie.nom) }}
 
-                        {{ form_label(form.dateHeureDebut) }}
-                        {{ form_widget(form.dateHeureDebut) }}
+                        {{ form_label(formSortie.dateHeureDebut) }}
+                        {{ form_widget(formSortie.dateHeureDebut) }}
 
-                        {{ form_label(form.dateLimiteInscription) }}
-                        {{ form_widget(form.dateLimiteInscription) }}
+                        {{ form_label(formSortie.dateLimiteInscription) }}
+                        {{ form_widget(formSortie.dateLimiteInscription) }}
 
-                        {{ form_label(form.nbInscriptionMax) }}
-                        {{ form_widget(form.nbInscriptionMax) }}
+                        {{ form_label(formSortie.nbInscriptionMax) }}
+                        {{ form_widget(formSortie.nbInscriptionMax) }}
 
-                        {{ form_label(form.duree) }}
-                        {{ form_widget(form.duree) }}
+                        {{ form_label(formSortie.duree) }}
+                        {{ form_widget(formSortie.duree) }}
 
-                        {{ form_label(form.infoSortie) }}
-                        {{ form_widget(form.infoSortie) }}
+                        {{ form_label(formSortie.infoSortie) }}
+                        {{ form_widget(formSortie.infoSortie) }}
 
-                        {{ form_label(form.campusOrganisateur) }}
-                        {{ form_widget(form.campusOrganisateur) }}
+                        {{ form_label(formSortie.campusOrganisateur) }}
+                        {{ form_widget(formSortie.campusOrganisateur) }}
                     <br>
-                     {{ form_label(form.lieu) }}
-                     {{ form_widget(form.lieu) }}
+                     {{ form_label(formSortie.lieu) }}
+                     {{ form_widget(formSortie.lieu) }}
                         <div class="mt-2 mb-2 text-center">
                             <button type="submit" class="btn btn-outline-success " value="{{ app.user.id }}">Sauvegarder</button>&nbsp;<button class="btn btn-outline-primary" value="publier" onclick="publierSortie()">Publier</button>
                             <a href="{{ path('main_accueil') }}" class="btn btn-danger">Annuler</a>
                         </div>
                      <input type="hidden" name="_csrf_token"
                             value="{{ csrf_token('authenticate') }}">
-                        {{ form_end(form) }}
+                        {{ form_end(formSortie) }}
                  </div>
              </div>
         </div>

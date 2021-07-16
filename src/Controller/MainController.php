@@ -155,103 +155,11 @@ class MainController extends AbstractController
 
 
         return $this->render('main/sortie.html.twig', [
-            'form' => $form->createView(),
+            'formSortie' => $form->createView(),
         ]);
     }
 
-    /**
-     * @Route("/admin/ville", name="main_adminVille")
-     */
-    public function adminVille(VilleRepository  $villeRepository, Request $request, EntityManagerInterface $entityManager)
-    {
 
-        $recherche = $request->request->get('ville');
-        if ($recherche != null )
-        {
-            dump($recherche);
-            $villes = $villeRepository->villeTrieeParMot($recherche);
-
-            return $this->render('main/ville.html.twig' , [
-                'villes' => $villes,
-            ]);
-        }
-
-
-
-        $ville = new Ville();
-        $nom = $request->request->get('nom');
-        $codePOstal = $request->request->get('codePostal');
-
-        if($nom != null && $codePOstal != null)
-        {
-            $ville->setNom(strtoupper($nom));
-            $ville->setCodePostal($codePOstal);
-            $entityManager->persist($ville);
-            $entityManager->flush();
-
-            $villes = $villeRepository->findAll();
-
-            $this->addFlash('success','Votre ville a été ajoutée');
-            return $this->render('main/ville.html.twig' , [
-                'villes' => $villes,
-            ]);
-
-        }
-
-
-        $villes = $villeRepository->findAll();
-
-        return $this->render('main/ville.html.twig' , [
-            'villes' => $villes,
-        ]);
-    }
-
-    /**
-     * @Route("/admin/campus", name="main_adminCampus")
-     */
-    public function adminCampus(CampusRepository  $campusRepository, Request $request, EntityManagerInterface $entityManager)
-    {
-
-        /*$recherche = $request->request->get('ville');
-        if ($recherche != null )
-        {
-            dump($recherche);
-            $villes = $villeRepository->villeTrieeParMot($recherche);
-
-            return $this->render('main/ville.html.twig' , [
-                'villes' => $villes,
-            ]);
-        }
-
-
-
-        $ville = new Ville();
-        $nom = $request->request->get('nom');
-        $codePOstal = $request->request->get('codePostal');
-
-        if($nom != null && $codePOstal != null)
-        {
-            $ville->setNom(strtoupper($nom));
-            $ville->setCodePostal($codePOstal);
-            $entityManager->persist($ville);
-            $entityManager->flush();
-
-            $villes = $villeRepository->findAll();
-
-            $this->addFlash('success','Votre ville a été ajoutée');
-            return $this->render('main/ville.html.twig' , [
-                'villes' => $villes,
-            ]);
-
-        }*/
-
-
-        $campus = $campusRepository->findAll();
-
-        return $this->render('main/campus.html.twig' , [
-            'villes' => $campus,
-        ]);
-    }
 
 
 }

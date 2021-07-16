@@ -16,10 +16,10 @@
             border-radius: 30px;
             background: #AAAAAA;
             ">
-            <form action ='{{ path('main_adminVille') }}' method="post">
+            <form action ='{{ path('admin_campus') }}' method="post">
                 <fieldset>
-                    <legend class="ml-1">Filtrer les villes</legend>
-                    <label for="ville">Le nom de la ville contient : </label><input class="form-control" type="search" name="ville" id="ville" placeholder="..."><br>
+                    <legend class="ml-1">Filtrer les campus</legend>
+                    <label for="campus">Le nom du campus contient : </label><input class="form-control" type="search" name="campus" id="campus" placeholder="..."><br>
                     <button type="submit" class="btn btn-primary">Recherche</button>
                 </fieldset>
             </form>
@@ -41,23 +41,20 @@
             <table class="text-center" >
                 <thead>
                 <tr>
-                    <th>Ville</th>
-                    <th>Code Postal</th>
+                    <th>Campus</th>
                     <th>Action</th>
                 </tr>
                 </thead>
                 <tbody style="overflow-y: scroll;">
-                {% for ville in villes %}
+                {% for campus in campus %}
                     <tr >
-                        <td>{{ ville.nom | upper}}</td>
-                        <td>{{ ville.codePostal }}</td>
+                        <td>{{ campus.nom | upper}}</td>
                         <td><a href="#"  class="btn btn-outline-danger">Suprimmer</a></td>
                     </tr>
                 {% endfor %}
                 <tr >
-                    <form action="{{ path('main_adminCampus') }}" method="post">
+                    <form action="{{ path('admin_campus') }}" method="post">
                         <td><input type="text" class="form-control" id="nom" name="nom"></td>
-                        <td><input type="number" class="form-control" id="codePostal" name="codePostal"></td>
                         <td><button type="submit" class="btn btn-primary" >Ajouter</button></td>
                         <input type="hidden" name="_csrf_token"
                                value="{{ csrf_token('authenticate') }}">

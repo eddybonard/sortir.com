@@ -16,7 +16,7 @@
             border-radius: 30px;
             background: #AAAAAA;
             ">
-            <form action ='{{ path('main_adminVille') }}' method="post">
+            <form action ='{{ path('admin_ville') }}' method="post">
                 <fieldset>
                     <legend class="ml-1">Filtrer les villes</legend>
                     <label for="ville">Le nom de la ville contient : </label><input class="form-control" type="search" name="ville" id="ville" placeholder="..."><br>
@@ -55,7 +55,7 @@
                     </tr>
                     {% endfor %}
                 <tr >
-                    <form action="{{ path('main_adminVille') }}" method="post">
+                    <form action="{{ path('admin_ville') }}" method="post">
                         <td><input type="text" class="form-control" id="nom" name="nom"></td>
                         <td><input type="number" class="form-control" id="codePostal" name="codePostal"></td>
                         <td><button type="submit" class="btn btn-primary" >Ajouter</button></td>
