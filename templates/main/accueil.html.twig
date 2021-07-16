@@ -20,11 +20,9 @@
                                    value="{{ csrf_token('authenticate') }}"
                             >
                             <button type="button" class="btn btn-primary" >Rechercher</button>
+                            <a style=" white-space: nowrap" class="btn btn-success" href="{{ path('main_sortie', {'id': app.user.id}) }}">Créer une sortie</a>
                         </fieldset>
                     </form>
-                     <div class="mb-3 mt-3">
-                         <a style="font-size:20px; white-space: nowrap" class="btn btn-outline-success  w-50" href="{{ path('main_sortie', {'id': app.user.id}) }}">Créer une sortie</a>
-                     </div>
                 </div>
                 <div class="container">
                     <div class="row">
