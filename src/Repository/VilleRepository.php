@@ -22,14 +22,14 @@ class VilleRepository extends ServiceEntityRepository
 
 
 
-    public function villeTrieeParMot($value): ?Ville
+    public function villeTrieeParMot($value): array
     {
         return $this->createQueryBuilder('v')
             ->andWhere('v.nom LIKE :value')
             ->setParameter('value', '%'.$value.'%')
             ->addOrderBy('v.nom')
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getResult();
         ;
     }
 

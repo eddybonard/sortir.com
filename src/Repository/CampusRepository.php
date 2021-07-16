@@ -19,14 +19,14 @@ class CampusRepository extends ServiceEntityRepository
         parent::__construct($registry, Campus::class);
     }
 
-    public function campusTrieeParMot($value): ?Campus
+    public function campusTrieeParMot($value): array
     {
         return $this->createQueryBuilder('c')
             ->andWhere('c.nom LIKE :value')
             ->setParameter('value', '%'.$value.'%')
             ->addOrderBy('c.nom')
             ->getQuery()
-            ->getOneOrNullResult()
+            ->getResult()
             ;
     }
     /*

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Campus;
 use App\Entity\Ville;
 use App\Repository\CampusRepository;
 use App\Repository\VilleRepository;
@@ -22,7 +23,7 @@ class AdminController extends AbstractController
         $recherche = $request->request->get('ville');
         if ($recherche != null )
         {
-            dump($recherche);
+
             $villes = $villeRepository->villeTrieeParMot($recherche);
 
             return $this->render('main/ville.html.twig' , [
@@ -53,10 +54,10 @@ class AdminController extends AbstractController
         }
 
 
-        $villes = $villeRepository->findAll();
+
 
         return $this->render('main/ville.html.twig' , [
-            'villes' => $villes,
+            'villes' => $villeRepository->findAll(),
         ]);
     }
 
@@ -71,27 +72,26 @@ class AdminController extends AbstractController
             dump($recherche);
             $campus = $campusRepository->campusTrieeParMot($recherche);
 
-            return $this->render('main/ville.html.twig' , [
+            return $this->render('main/campus.html.twig' , [
                 'campus' => $campus,
             ]);
         }
 
-        $ville = new Ville();
+        $campus = new Campus();
         $nom = $request->request->get('nom');
-        $codePOstal = $request->request->get('codePostal');
 
-        if($nom != null && $codePOstal != null)
+
+        if($nom != null )
         {
-            $ville->setNom(strtoupper($nom));
-            $ville->setCodePostal($codePOstal);
-            $entityManager->persist($ville);
+            $campus->setNom(strtoupper($nom));
+            $entityManager->persist($campus);
             $entityManager->flush();
 
-            $villes = $villeRepository->findAll();
+            $campus = $campusRepository->findAll();
 
             $this->addFlash('success','Votre ville a été ajoutée');
-            return $this->render('main/ville.html.twig' , [
-                'villes' => $villes,
+            return $this->render('main/campus.html.twig' , [
+                'campus' => $campus,
             ]);
 
         }
