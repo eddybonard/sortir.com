@@ -8,10 +8,8 @@
         <h4>Participant : {{ app.user.prenom | capitalize }} {{ app.user.nom | slice(0,1) | capitalize}}. {% if app.user.administrateur == 1 %}(admin){% endif %}</h4>
     </div>
 
-    <section class="w-50">
-        <div class="container" >
-            <div class="row">
-                <div class="col-lg-6">
+    <section style="display: flex;">
+                 <div>
                     <form name="filtre" class="name " id="name">
                         <fieldset>
                             <legend>Filtrer les sorties</legend>
@@ -24,36 +22,36 @@
                             <button type="button" class="btn btn-primary" >Rechercher</button>
                         </fieldset>
                     </form>
+                     <div class="mb-3 mt-3">
+                         <a style="font-size:20px; white-space: nowrap" class="btn btn-outline-success  w-50" href="{{ path('main_sortie', {'id': app.user.id}) }}">Créer une sortie</a>
+                     </div>
                 </div>
-                    {% for sortie in sorties %}
-                        <div class="col-lg-3">
-                                <div class="card">
-                                        <img src="{{ asset('uploadImage/' ~ sortie.photo) }}" alt="description">
+                <div class="container">
+                    <div class="row">
+                        {% for sortie in sorties %}
+                            <div class="col-lg-3 mt-3">
+                                <div class="card w-30">
+                                    <img src="{{ asset('uploadImage/' ~ sortie.photo) }}" alt="description">
                                     <div class="card-body">
                                         <div class="card-title"><h3>{{ sortie.nom }}</h3> </div>
                                         <div class="card-text">
                                             <p>Date de début : {{ sortie.dateHeureDebut | date('d/m/Y') }}<br>
-                                               Clôture :  {{ sortie.dateLimiteInscription | date('d/m/Y') }}<br>
-                                            Places : /{{ sortie.nbInscriptionMax }}<br>
-                                            Etat : {#{{ sortie.etat  }}#}<br>
-                                            Organisateur : {#{{ sortie.organisateur }}#}</p>
+                                                Clôture :  {{ sortie.dateLimiteInscription | date('d/m/Y') }}<br>
+                                                Places : /{{ sortie.nbInscriptionMax }}<br>
+                                                Etat : {#{{ sortie.etat  }}#}<br>
+                                                Organisateur : {#{{ sortie.organisateur }}#}</p>
                                             {#{% if app.user.id == sortie.organisateur %}#}
-                                                <a href="#" type="btn btn-primary">Modifier</a>
-                                           {# {% else %}#}
-                                                <a href="#" type="btn btn-primary">Afficher</a>
-                                        {#    {% endif %}#}
+                                            <a href="#" class="btn btn-primary">Modifier</a>
+                                            {# {% else %}#}
+                                            <a href="#" class="btn btn-primary">Afficher</a>
+                                            {#    {% endif %}#}
                                         </div>
                                     </div>
                                 </div>
-                        </div>
-                    {% endfor %}
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
-            </div>
-        </div>
     </section>
-
-    <div class="text-center mb-3 mt-3">
-        <a style="font-size:20px;" class="btn btn-outline-secondary  w-50" href="{{ path('main_sortie', {'id': app.user.id}) }}">Créer une sortie</a>
-    </div>
 
 {% endblock %}
