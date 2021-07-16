@@ -45,8 +45,10 @@
                             {{ form_widget(modifForm.password) }}
 
                             <div class="mt-2 mb-2">
-                                <button  class="btn btn-outline-warning ">Modifier</button>&nbsp <a href="{{ path("main_suprimmer", {'id': app.user.id}) }}" class="btn btn-danger" onclick="window.alert('Etes-vous sur de vouloir supprimer votre compte ?')">Supprimer mon compte</a>
+                                <button  class="btn btn-outline-warning " onclick="modifierProfil()">Modifier</button>&nbsp <a href="{{ path("main_suprimmer", {'id': app.user.id}) }}" class="btn btn-danger" onclick="supprimerProfil()">Supprimer mon compte</a>
                             </div>
+                            <input type="hidden" name="_csrf_token"
+                                   value="{{ csrf_token('authenticate') }}">
                             {{ form_end(modifForm) }}
                          </div>
                 </div>
