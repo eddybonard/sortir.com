@@ -10,12 +10,12 @@
 
     <section>
                  <div class="mr-5 ml-5 w-60">
-                    <form action="{{ path('main_filtre') }}" name="filtre" class="name " id="name">
+                    <form action="{{ path('main_filtre') }}" method="post" name="filtre" >
                         <fieldset>
                             <legend>Filtrer les sorties</legend>
-                            <label for="campus">Campus</label><select class="form-control" id="campus" name="campus" >
+                            <label for="campus">Campus</label><select class="form-control" name="campus" id="campus">
                             {% for campus in campus %}
-                                 <option value="{{ campus.nom }}">{{ campus.nom }}</option>
+                                 <option name="campus" id="campus" value="{{ campus.id }}">{{ campus.nom }}</option>
                             {% endfor %}
                             </select>
                             <br>
@@ -29,31 +29,37 @@
                         </fieldset>
                     </form>
                 </div>
-                <div class="container">
-                    <div class="row">
-                        {% for sortie in sorties %}
-                            <div class="col-lg-3 mt-3">
-                                <div class="card ">
-                                    <img height="250" src="{{ asset('uploadImage/' ~ sortie.photo) }}" alt="description">
-                                    <div class="card-body">
-                                        <div class="card-title"><h3>{{ sortie.nom }}</h3> </div>
-                                        <div class="card-text">
-                                            <p>Date de début : {{ sortie.dateHeureDebut | date('d/m/Y') }}<br>
-                                                Clôture :  {{ sortie.dateLimiteInscription | date('d/m/Y') }}<br>
-                                                Places : /{{ sortie.nbInscriptionMax }}<br>
-                                                Etat : {#{{ sortie.etat  }}#}<br>
-                                                Organisateur : {#{{ sortie.organisateur }}#}</p>
-                                            {% if app.user == sortie.organisateur %}
-                                                <a href="#" class="btn btn-outline-danger">Annuler</a>
-                                             {% endif %}
-                                                <a href="#" class="btn btn-primary">Afficher</a>
+                {% if campus == null %}
+                    <div class="col-lg-12 mt-3 mb-3 text-center text-muted ">
+                        <h3>Aucune sortie disponible au sein de ce campus</h3>
+                    </div>
+                {% else %}
+                    <div class="container">
+                        <div class="row">
+                            {% for sortie in sorties %}
+                                <div class="col-lg-3 mt-3">
+                                    <div class="card ">
+                                        <img height="250" src="{{ asset('uploadImage/' ~ sortie.photo) }}" alt="description">
+                                        <div class="card-body">
+                                            <div class="card-title"><h3>{{ sortie.nom }}</h3> </div>
+                                            <div class="card-text">
+                                                <p>Date de début : {{ sortie.dateHeureDebut | date('d/m/Y') }}<br>
+                                                    Clôture :  {{ sortie.dateLimiteInscription | date('d/m/Y') }}<br>
+                                                    Places : /{{ sortie.nbInscriptionMax }}<br>
+                                                    Etat : {#{{ sortie.etat  }}#}<br>
+                                                    Organisateur : {#{{ sortie.organisateur }}#}</p>
+                                                {% if app.user == sortie.organisateur %}
+                                                    <a href="#" class="btn btn-outline-danger">Annuler</a>
+                                                 {% endif %}
+                                                    <a href="#" class="btn btn-primary">Afficher</a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        {% endfor %}
+                            {% endfor %}
+                        </div>
                     </div>
-                </div>
+                 {% endif %}
     </section>
 
 {% endblock %}

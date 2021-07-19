@@ -49,6 +49,16 @@ class SortieRepository extends ServiceEntityRepository
             ;
     }
 
+    public function sortieTrieeParCampus($value): array
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.campusOrganisateur = :value')
+            ->setParameter('value', $value)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     // /**
     //  * @return Sortie[] Returns an array of Sortie objects
     //  */

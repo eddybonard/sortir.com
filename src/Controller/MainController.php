@@ -131,17 +131,19 @@ class MainController extends AbstractController
     /**
      * @Route("/accueil/filtre", name="main_filtre")
      */
-    public function filtrerLesSortie(Request $request)
+    public function filtrerLesSortie(Request $request, CampusRepository $campusRepository, SortieRepository $sortieRepository)
     {
         $recherche = $request->request->get('campus');
-
-        if($recherche != null)
-        {
+        $campus = $campusRepository->findAll();
+        $sorties = $sortieRepository->sortieTrieeParCampus($recherche);
             dump($recherche);
-            return $this->render('main/accueil.html.twig');
-        }
+            return $this->render('main/accueil.html.twig', [
+                'campus' => $campus,
+                'sorties' =>$sorties
+            ]);
 
-        return $this->render('main/accueil.html.twig');
+
+
     }
 
 
