@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - Mes sorties{% endblock %}
+
+{% block body %}
+    <div class="jumbotron text-center bg-warning">
+        <h1>Mes sorties</h1>
+    </div>
+
+    <section>
+        <div class="mr-5 ml-5">
+            <form action="{{ path('sortie_filtre' ,{'id':app.user.id}) }}" method="post" name="filtre" class="name " id="name">
+                <fieldset>
+                    <legend>Filtrer mes sorties</legend>
+                    <label for="debut">Entre</label>&nbsp;
+                    <label for="ville">Le nom de la sortie contient : </label><input class="form-control" type="search" name="sortie" id="sortie" placeholder="..."><br>
+                    <input class="form-control" type="date" name="debut" id="debut">&nbsp;<label for="fin"> et</label>&nbsp;<input
+                            class="form-control"  type="date" name="fin" id="fin"><br>
+                    <input type="hidden" name="_csrf_token"
+                           value="{{ csrf_token('authenticate') }}"
+                    >
+                    <button type="submit" class="btn btn-primary " >Rechercher</button>
+                    <a style=" white-space: nowrap" class="btn btn-success" href="{{ path('sortie_creation') }}">Créer une sortie</a>
+                </fieldset>
+            </form>
+        </div>
+        <div class="container">
+            <div class="row">
+                {% if sorties == null %}
+                <div class="col-lg-12 mt-3 mb-3 text-center text-muted ">
+                    <h3>Vous avez aucune sorties pour l'instant...</h3>
+                </div>
+                {% else %}
+                {% for sortie in sorties %}
+                    <div class="col-lg-3 mt-3 mb-3">
+                        <div class="card w-30">
+                            <img src="{{ asset('uploadImage/' ~ sortie.photo) }}" alt="description">
+                            <div class="card-body">
+                                <div class="card-title"><h3>{{ sortie.nom }}</h3> </div>
+                                <div class="card-text">
+                                    <p>Date de début : {{ sortie.dateHeureDebut | date('d/m/Y') }}<br>
+                                        Clôture :  {{ sortie.dateLimiteInscription | date('d/m/Y') }}<br>
+                                        Places : /{{ sortie.nbInscriptionMax }}<br>
+                                        Etat : {#{{ sortie.etat  }}#}<br>
+                                        Organisateur : {#{{ sortie.organisateur }}#}</p>
+                                    <a href="{{ path('sortie_modifier', {'id':sortie.id}) }}" class="btn btn-primary">Modifier</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

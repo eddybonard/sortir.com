@@ -8,18 +8,23 @@
         <h4>Participant : {{ app.user.prenom | capitalize }} {{ app.user.nom | slice(0,1) | capitalize}}. {% if app.user.administrateur == 1 %}(admin){% endif %}</h4>
     </div>
 
-    <section style="display: flex;">
-                 <div>
-                    <form name="filtre" class="name " id="name">
+    <section>
+                 <div class="mr-5 ml-5 w-60">
+                    <form action="{{ path('main_filtre') }}" name="filtre" class="name " id="name">
                         <fieldset>
                             <legend>Filtrer les sorties</legend>
-                            <label for="campus">Campus</label><select class="form-control" id="campus" name="campus" ></select><br>
+                            <label for="campus">Campus</label><select class="form-control" id="campus" name="campus" >
+                            {% for campus in campus %}
+                                 <option value="{{ campus.nom }}">{{ campus.nom }}</option>
+                            {% endfor %}
+                            </select>
+                            <br>
                             <label for="debut">Entre</label>&nbsp;<input class="form-control" type="date" name="debut" id="debut">&nbsp;<label for="fin"> et</label>&nbsp;<input
                                     class="form-control"  type="date" name="fin" id="fin"><br>
                             <input type="hidden" name="_csrf_token"
                                    value="{{ csrf_token('authenticate') }}"
                             >
-                            <button type="button" class="btn btn-primary mb-2" >Rechercher</button>
+                            <button type="submit" class="btn btn-primary " >Rechercher</button>
                             <a style=" white-space: nowrap" class="btn btn-success" href="{{ path('sortie_creation') }}">Créer une sortie</a>
                         </fieldset>
                     </form>
@@ -28,8 +33,8 @@
                     <div class="row">
                         {% for sortie in sorties %}
                             <div class="col-lg-3 mt-3">
-                                <div class="card w-30">
-                                    <img src="{{ asset('uploadImage/' ~ sortie.photo) }}" alt="description">
+                                <div class="card ">
+                                    <img height="250" src="{{ asset('uploadImage/' ~ sortie.photo) }}" alt="description">
                                     <div class="card-body">
                                         <div class="card-title"><h3>{{ sortie.nom }}</h3> </div>
                                         <div class="card-text">
@@ -38,11 +43,11 @@
                                                 Places : /{{ sortie.nbInscriptionMax }}<br>
                                                 Etat : {#{{ sortie.etat  }}#}<br>
                                                 Organisateur : {#{{ sortie.organisateur }}#}</p>
-                                            {#{% if app.user.id == sortie.organisateur %}#}
-                                            <a href="{{ path('sortie_modifier', {'id':sortie.id}) }}" class="btn btn-primary">Modifier</a>
-                                            {# {% else %}#}
-                                            <a href="#" class="btn btn-primary">Afficher</a>
-                                            {#    {% endif %}#}
+                                            {% if app.user.campus == sortie.campusOrganisateur %}
+                                                <a href="{{ path('sortie_modifier', {'id':sortie.id}) }}" class="btn btn-primary">Modifier</a>
+                                             {% else %}
+                                                <a href="#" class="btn btn-primary">Afficher</a>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>

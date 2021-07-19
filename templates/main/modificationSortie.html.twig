@@ -30,8 +30,7 @@
                     {{ form_label(formSortie.infoSortie) }}
                     {{ form_widget(formSortie.infoSortie) }}
 
-                    {{ form_label(formSortie.campusOrganisateur) }}
-                    {{ form_widget(formSortie.campusOrganisateur) }}
+
 
                     {{ form_label(formSortie.lieu) }}
                     {{ form_widget(formSortie.lieu) }}
@@ -43,7 +42,7 @@
                     {{ form_widget(formSortie.etat) }}
 
                     <div class="mt-2 mb-2 text-center">
-                        <button type="submit" class="btn btn-outline-success " value="{{ app.user.id }}">Sauvegarder</button>&nbsp;<button class="btn btn-outline-primary" value="publier" onclick="publierSortie()">Publier</button>
+                        <button type="submit" class="btn btn-outline-success " >Modifier la sortie</button>
                         <a href="{{ path('main_accueil') }}" class="btn btn-danger">Annuler</a>
                     </div>
                     <input type="hidden" name="_csrf_token"

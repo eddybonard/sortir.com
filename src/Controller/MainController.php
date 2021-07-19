@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Campus;
 use App\Entity\Etat;
 use App\Entity\Lieu;
 use App\Entity\Participant;
@@ -35,12 +36,14 @@ class MainController extends AbstractController
     /**
      * @Route("/accueil", name="main_accueil")
      */
-    public function accueil(SortieRepository $sortieRepository): Response
+    public function accueil(SortieRepository $sortieRepository, CampusRepository $campusRepository): Response
     {
         $sorties = $sortieRepository->findAll();
+        $campus = $campusRepository->findall();
 
         return $this->render('main/accueil.html.twig', [
-            'sorties'=>$sorties
+            'sorties'=>$sorties,
+            'campus' =>$campus
         ]);
     }
 
@@ -125,6 +128,21 @@ class MainController extends AbstractController
 
     }
 
+    /**
+     * @Route("/accueil/filtre", name="main_filtre")
+     */
+    public function filtrerLesSortie(Request $request)
+    {
+        $recherche = $request->request->get('campus');
+
+        if($recherche != null)
+        {
+            dump($recherche);
+            return $this->render('main/accueil.html.twig');
+        }
+
+        return $this->render('main/accueil.html.twig');
+    }
 
 
 

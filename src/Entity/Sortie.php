@@ -89,6 +89,11 @@ class Sortie
      */
     private $photo;
 
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $datePublication;
+
     public function __construct()
     {
         $this->participants = new ArrayCollection();
@@ -263,6 +268,18 @@ class Sortie
     public function setPhoto(?string $photo): self
     {
         $this->photo = $photo;
+
+        return $this;
+    }
+
+    public function getDatePublication(): ?\DateTimeInterface
+    {
+        return $this->datePublication;
+    }
+
+    public function setDatePublication(\DateTimeInterface $datePublication): self
+    {
+        $this->datePublication = $datePublication;
 
         return $this;
     }

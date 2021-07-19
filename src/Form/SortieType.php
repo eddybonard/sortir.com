@@ -49,11 +49,7 @@ class SortieType extends AbstractType
                 'attr' => ['style' => 'resize:none;']
 
             ] )
-            ->add('campusOrganisateur', EntityType::class, [
-                'class' => Campus::class,
-                    'choice_label' => 'nom'
 
-            ])
             ->add('lieu', EntityType::class, [
                 'class' => Lieu::class,
                 'choice_label' => 'nom'
