@@ -26,3 +26,11 @@ function supprimerCampus() {
     window.confirm('Etes-vous sur de vouloir supprimer ce campus ?')
 
 }
+
+function suprimmerSortie() {
+
+
+    window.confirm('Etes-vous sur de vouloir supprimer la sortie ?')
+
+}
+

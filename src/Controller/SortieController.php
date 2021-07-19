@@ -138,6 +138,7 @@ class SortieController extends AbstractController
                                    EntityManagerInterface $entityManager): Response
     {
         $lieu = new Lieu();
+        $sortie = new Sortie();
         $sortie = $sortieRepository->find($id);
         $formLieu = $this->createForm(LieuType::class, $lieu);
         $formSortie = $this->createForm(SortieType::class, $sortie);
@@ -195,9 +196,26 @@ class SortieController extends AbstractController
         return $this->render('main/modificationSortie.html.twig', [
             'formSortie' => $formSortie->createView(),
             'formLieu' =>$formLieu->createView(),
+            'sortie' =>$sortie
         ]);
 
 
+    }
+
+    /**
+     * @Route("/sortieSuprimmer{id}", name="sortie_suprimmer")
+     */
+    public function suprimmerSortie(Sortie $sortie, EntityManagerInterface $entityManager, SortieRepository $sortieRepository)
+    {
+        $entityManager->remove($sortie);
+        $entityManager->flush();
+
+        $user = $this->getUser()->getId();
+        $sorties = $sortieRepository->mesSortie($user);
+        $this->addFlash('danger', 'Votre sortie a bien été suprimmée');
+        return $this->render('main/sortieHistorique.html.twig', [
+            'sorties' => $sorties
+        ]);
     }
 
     /**
