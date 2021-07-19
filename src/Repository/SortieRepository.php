@@ -19,6 +19,15 @@ class SortieRepository extends ServiceEntityRepository
         parent::__construct($registry, Sortie::class);
     }
 
+    public function sortiePlusRecent()
+    {
+        return $this->createQueryBuilder('s')
+            ->orderBy('s.dateHeureDebut','ASC')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
     public function mesSortie($id)
     {
         return $this->createQueryBuilder('s')

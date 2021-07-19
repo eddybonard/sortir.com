@@ -89,12 +89,9 @@ class SortieController extends AbstractController
             }else
             {
                 $user = $this->getUser()->getId();
-                $sorties = $sortieRepository->mesSortie($user);
-                $campus = $campusRepository->findall();
                 $this->addFlash('success', 'Votre sortie à bien été sauvegardée');
-                return $this->render('main/sortieHistorique.html.twig', [
-                    'sorties' => $sorties,
-                    'campus' =>$campus
+                return $this->redirectToRoute('sortie_historique', [
+                    'id' => $user
                 ]);
             }
 
@@ -113,6 +110,7 @@ class SortieController extends AbstractController
         return $this->render('main/sortie.html.twig', [
             'formSortie' => $formSortie->createView(),
             'formLieu' =>$formLieu->createView(),
+            'campus' => $this->getUser()->getCampus(),
         ]);
     }
 
@@ -144,7 +142,6 @@ class SortieController extends AbstractController
         $formSortie = $this->createForm(SortieType::class, $sortie);
         $formLieu->handleRequest($request);
         $formSortie->handleRequest($request);
-
 
 
         if($formSortie->isSubmitted() && $formSortie->isValid())

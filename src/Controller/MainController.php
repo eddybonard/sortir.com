@@ -38,7 +38,7 @@ class MainController extends AbstractController
      */
     public function accueil(SortieRepository $sortieRepository, CampusRepository $campusRepository): Response
     {
-        $sorties = $sortieRepository->findAll();
+        $sorties = $sortieRepository->sortiePlusRecent();
         $campus = $campusRepository->findall();
 
         return $this->render('main/accueil.html.twig', [

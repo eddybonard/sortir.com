@@ -30,6 +30,8 @@
                         {{ form_label(formSortie.infoSortie) }}
                         {{ form_widget(formSortie.infoSortie) }}
 
+                     <label for="campus">Campus :</label>
+                     <input class="form-control" readonly type="text" id="campus" name="campus" value="{{ campus.nom }}">
 
                      {{ form_label(formSortie.lieu) }}
                      {{ form_widget(formSortie.lieu) }}
