@@ -43,7 +43,7 @@
                                                 Places : /{{ sortie.nbInscriptionMax }}<br>
                                                 Etat : {#{{ sortie.etat  }}#}<br>
                                                 Organisateur : {#{{ sortie.organisateur }}#}</p>
-                                            {% if app.user.campus == sortie.campusOrganisateur %}
+                                            {% if app.user.id == sortie.organisateur %}
                                                 <a href="{{ path('sortie_modifier', {'id':sortie.id}) }}" class="btn btn-primary">Modifier</a>
                                              {% else %}
                                                 <a href="#" class="btn btn-primary">Afficher</a>

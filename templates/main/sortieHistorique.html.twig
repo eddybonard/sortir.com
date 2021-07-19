@@ -4,16 +4,16 @@
 
 {% block body %}
     <div class="jumbotron text-center bg-warning">
-        <h1>Mes sorties</h1>
+        <h1><a style="color:black; text-decoration:none;" href="{{ path('sortie_historique', {'id': app.user.id}) }}">Mes sorties</a></h1>
     </div>
 
     <section>
         <div class="mr-5 ml-5">
-            <form action="{{ path('sortie_filtre' ,{'id':app.user.id}) }}" method="post" name="filtre" class="name " id="name">
+            <form action="{{ path('sortie_filtre' , {'id': app.user.id}) }}" method="post" name="filtre" class="name " id="name">
                 <fieldset>
                     <legend>Filtrer mes sorties</legend>
+                    <label for="sortie">Le nom de la sortie contient : </label><input class="form-control" type="search" name="sortie" id="sortie" placeholder="..."><br>
                     <label for="debut">Entre</label>&nbsp;
-                    <label for="ville">Le nom de la sortie contient : </label><input class="form-control" type="search" name="sortie" id="sortie" placeholder="..."><br>
                     <input class="form-control" type="date" name="debut" id="debut">&nbsp;<label for="fin"> et</label>&nbsp;<input
                             class="form-control"  type="date" name="fin" id="fin"><br>
                     <input type="hidden" name="_csrf_token"

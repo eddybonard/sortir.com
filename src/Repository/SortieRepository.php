@@ -29,6 +29,16 @@ class SortieRepository extends ServiceEntityRepository
             ->getResult()
             ;
     }
+    public function sortieTrieeParMot($value): array
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.nom LIKE :value')
+            ->setParameter('value', '%'.$value.'%')
+            ->addOrderBy('s.nom')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
 
     // /**
     //  * @return Sortie[] Returns an array of Sortie objects
