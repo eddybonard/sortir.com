@@ -2,24 +2,24 @@
 
 namespace App\Controller;
 
-use App\Entity\Etat;
+
 use App\Entity\Lieu;
-use App\Entity\Participant;
+
 use App\Entity\Sortie;
 use App\Form\LieuType;
 use App\Form\SortieType;
 use App\Repository\CampusRepository;
-use App\Repository\EtatRepository;
+
 use App\Repository\LieuRepository;
 use App\Repository\SortieRepository;
+use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 class SortieController extends AbstractController
@@ -236,5 +236,57 @@ class SortieController extends AbstractController
             'sorties' => $sorties,
         ]);
 
+    }
+
+    /**
+     * @Route("/sortie/affichage{id}", name="sortie_affichage")
+     */
+    public function afficherLaSortie(int $id,
+                                     SortieRepository $sortieRepository,
+                                     LieuRepository $lieuRepository,
+                                    VilleRepository  $villeRepository)
+    {
+
+        $sortie = $sortieRepository->find($id);
+        $lieuDeLaSortie = $sortie->getLieu();
+        $lieu = $lieuRepository->find($lieuDeLaSortie);
+        $ville = $villeRepository->find($lieu);
+
+        dump($sortie);
+
+        return $this->render('main/afficherLaSortie.html.twig', [
+            'sortie' =>$sortie,
+            'lieu' =>$lieu,
+            'campus' => $this->getUser()->getCampus(),
+            'ville'=>$ville,
+            'participants' => $sortie->getParticipants()
+        ]);
+    }
+
+    /**
+     * @Route("/sortie/inscription{id}", name="sortie_inscription")
+     */
+    public function inscriptionSortie(int $id, SortieRepository $sortieRepository, EntityManagerInterface $entityManager,
+                                      CampusRepository $campusRepository, Request $request)
+    {
+
+        $sorties = $sortieRepository->sortiePlusRecent();
+        $campus = $campusRepository->findall();
+
+        $sortie = $sortieRepository->find($id);
+        $user = $this->getUser();
+        $bouton = $request->request->get('inscription');
+        dump($bouton);
+
+        $sortie->addParticipant($user);
+        $entityManager->persist($sortie);
+        $entityManager->flush();
+        dump($sortie->getParticipants());
+
+        $this->addFlash('success', 'Inscription réussite');
+        return $this->render('main/accueil.html.twig',[
+            'sorties'=>$sorties,
+            'campus' =>$campus
+        ]);
     }
 }

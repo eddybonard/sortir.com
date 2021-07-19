@@ -1,0 +1,72 @@
+{% extends 'base.html.twig'%}
+
+{% block title %}{{ parent() }} - Affichage sortie{% endblock %}
+
+{% block body %}
+    <div class="jumbotron  text-center">
+        <h1>"{{ sortie.nom }}"</h1>
+    </div>
+    <div class="container ">
+        <div class="row " >
+            <div class="col-lg-6 mb-2">
+                <div class="w-50">
+                   <form>
+                       <label for="nomSortie">Nom de la sortie : </label><input type="text" class="form-control" id="nomSortie" name="nomSortie" readonly value="{{ sortie.nom }}" >
+                       <label for="dateSortie">Date et heure de la sortie : </label><input type="text" class="form-control" id="dateSortie" name="dateSortie" readonly value="{{ sortie.dateHeureDebut | date('d/m/Y H:m') }}" >
+                       <label for="dateLimite"></label>Date limite d'inscription : <input type="text" class="form-control" id="dateLimite" name="dateLimite" readonly value="{{ sortie.dateLimiteInscription | date('d/m/Y') }}" >
+                       <label for="places"></label>Nombres de places : <input type="text" class="form-control" id="places" name="places" readonly value="{{ sortie.nbInscriptionMax }}" >
+                       <label for="duree"></label>Durée : <input type="text" class="form-control" id="duree" name="duree" readonly value="{{ sortie.duree }} minutes" >
+                       <label for="description"></label>Description et infos : <input type="text" class="form-control" id="description" name="description" readonly value="{{ sortie.infoSortie }}" >
+                       <input type="hidden" name="_csrf_token"
+                              value="{{ csrf_token('authenticate') }}">
+                   </form>
+                </div>
+            </div>
+            <hr>
+            <div class="col-lg-6 mb-2">
+                <div class="w-50">
+                    <h4>Lieu </h4>
+                    <form>
+                        <label for="campus">Campus: </label><input type="text" class="form-control" id="campus" name="campus" readonly value="{{ campus.nom }}" >
+                        <label for="lieu">Lieu : </label><input type="text" class="form-control" id="lieu" name="lieu" readonly value="{{ lieu.nom }}" >
+                        <label for="rue"></label>Rue : <input type="text" class="form-control" id="rue" name="rue" readonly value="{{ lieu.rue }}" >
+                        <label for="codepostal"></label>Code postal : <input type="text" class="form-control" id="codepostal" name="codepostal" readonly value="{{ ville.codePostal }}" >
+                        <label for="latitude"></label>Latitude : <input type="text" class="form-control" id="Latitude" name="Latitude" readonly value="{{ lieu.latitude }} minutes" >
+                        <label for="longitude"></label>Longitude : <input type="text" class="form-control" id="longitude" name="longitude" readonly value="{{ lieu.longitude }}" >
+                        <input type="hidden" name="_csrf_token"
+                               value="{{ csrf_token('authenticate') }}">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div>
+            <h3>Participant</h3>
+            {% if participants.count == null %}
+                 <div class="text-muted mb-3 ">
+                    <h4>Aucun participant pour le moment </h4>
+                </div>
+            {% else %}
+                <div class="mt-3 mb-3 " >
+                    <table class="text-center" style="border: 1px solid black;" >
+                        <thead>
+                        <tr>
+                            <th>Pseudo</th>
+                            <th>Nom</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for participant in participants %}
+                            <tr>
+                                <td> {{ participant.pseudo}}</td>
+                                <td>{{ participant.nom }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% endif %}
+        </div>
+
+    </div>
+
+{% endblock %}
