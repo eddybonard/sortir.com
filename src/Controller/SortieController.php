@@ -211,10 +211,9 @@ class SortieController extends AbstractController
         $entityManager->flush();
 
         $user = $this->getUser()->getId();
-        $sorties = $sortieRepository->mesSortie($user);
         $this->addFlash('danger', 'Votre sortie a bien été suprimmée');
-        return $this->render('main/sortieHistorique.html.twig', [
-            'sorties' => $sorties
+        return $this->redirectToRoute('sortie_historique', [
+            'id' => $user
         ]);
     }
 
