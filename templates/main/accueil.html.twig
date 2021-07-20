@@ -53,8 +53,8 @@
                                                     <a href="{{ path('sortie_affichage', {'id' : sortie.id}) }}" class="btn btn-primary">Afficher</a>
                                                  {% else %}
                                                     <a href="{{ path('sortie_affichage', {'id' : sortie.id}) }}" class="btn btn-primary">Afficher</a>
-                                                     <form action="{{ path('sortie_inscription', {'id': sortie.id}) }}" method="post">
-                                                         <button class="btn btn-outline-success" type="submit" id="inscription" name="inscription" value="inscription">- S'inscrire</button>
+                                                     <form class="mt-2" action="{{ path('sortie_inscription', {'id': sortie.id}) }}" method="post">
+                                                         <button class="btn btn-outline-success" type="submit" id="inscription" name="inscription" value="inscription">+ S'inscrire</button>
                                                      </form>
                                                  {% endif  %}
                                             </div>
