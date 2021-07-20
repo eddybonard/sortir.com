@@ -19,6 +19,7 @@ use App\Repository\SortieRepository;
 use App\Repository\VilleRepository;
 use App\Security\AppAuthentificationAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
@@ -36,9 +37,15 @@ class MainController extends AbstractController
     /**
      * @Route("/accueil", name="main_accueil")
      */
-    public function accueil(SortieRepository $sortieRepository, CampusRepository $campusRepository): Response
+    public function accueil(SortieRepository $sortieRepository,
+                            PaginatorInterface $paginator,
+                            CampusRepository $campusRepository,
+                            Request $request): Response
     {
-        $sorties = $sortieRepository->sortiePlusRecent();
+        $sorties = $paginator->paginate(
+            $sortieRepository->sortiePlusRecent(),
+            $request->query->getInt('page',1),8
+        );
         $campus = $campusRepository->findall();
 
         return $this->render('main/accueil.html.twig', [
@@ -131,11 +138,17 @@ class MainController extends AbstractController
     /**
      * @Route("/accueil/filtre", name="main_filtre")
      */
-    public function filtrerLesSortie(Request $request, CampusRepository $campusRepository, SortieRepository $sortieRepository)
+    public function filtrerLesSortie(Request $request,
+                                     CampusRepository $campusRepository,
+                                     SortieRepository $sortieRepository,
+                                    PaginatorInterface $paginator)
     {
         $recherche = $request->request->get('campus');
         $campus = $campusRepository->findAll();
-        $sorties = $sortieRepository->sortieTrieeParCampus($recherche);
+        $sorties = $paginator->paginate(
+            $sortieRepository->sortieTrieeParCampus($recherche),
+            $request->query->getInt('page', 1),8
+        );
             dump($recherche);
             return $this->render('main/accueil.html.twig', [
                 'campus' => $campus,

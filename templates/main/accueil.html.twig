@@ -37,7 +37,7 @@
                                 </div>
                             {% else %}
                             {% for sortie in sorties %}
-                                <div class="col-lg-3 mt-3">
+                                <div class="col-lg-3 mt-3 mb-3">
                                     <div class="card ">
                                         <img height="250" src="{{ asset('uploadImage/' ~ sortie.photo) }}" alt="description">
                                         <div class="card-body">
@@ -54,7 +54,10 @@
                                                  {% else %}
                                                     <a href="{{ path('sortie_affichage', {'id' : sortie.id}) }}" class="btn btn-primary">Afficher</a>
                                                      <form class="mt-2" action="{{ path('sortie_inscription', {'id': sortie.id}) }}" method="post">
-                                                         <button class="btn btn-outline-success" type="submit" id="inscription" name="inscription" value="inscription">+ S'inscrire</button>
+                                                         <button class=" inscription btn btn-outline-success" type="submit" name="inscription"  value="inscription" onclick="boutonInsciption()">+ S'inscrire</button>
+                                                     </form>
+                                                     <form class="mt-2" action="{{ path('sortie_desister', {'id': sortie.id}) }}" method="post">
+                                                         <button class="btn btn-outline-danger" type="submit" id="desincriptions" name="desincriptions"  value="inscription">- Se désister</button>
                                                      </form>
                                                  {% endif  %}
                                             </div>
@@ -65,6 +68,16 @@
                             {% endif %}
                         </div>
                     </div>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-12">
+                    <div class="navigation  "  >
+                        {{ knp_pagination_render(sorties) }}
+                    </div>
+                </div>
+            </div>
+        </div>
     </section>
+
 
 {% endblock %}

@@ -21,16 +21,22 @@ class SortieRepository extends ServiceEntityRepository
 
     public function sortiePlusRecent()
     {
+        $pg = $this->paginationListe();
+        return $pg->getQuery()
+                ->getResult()
+            ;
+    }
+
+    public function paginationListe()
+    {
         return $this->createQueryBuilder('s')
             ->orderBy('s.dateHeureDebut','ASC')
-            ->getQuery()
-            ->getResult()
             ;
     }
 
     public function mesSortie($id)
     {
-        return $this->createQueryBuilder('s')
+        return  $this->createQueryBuilder('s')
             ->andWhere('s.organisateur = :id')
             ->setParameter('id',$id)
             ->orderBy('s.datePublication','DESC')

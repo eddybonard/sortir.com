@@ -34,3 +34,13 @@ function suprimmerSortie() {
 
 }
 
+function boutonInsciption() {
+
+    document.getElementById("inscription").addEventListener("click", function(){
+        document.getElementById("desincriptions").hidden=false;
+        document.getElementById("inscription").hidden=true;
+    }, false);
+    console.log("hello")
+
+}
+

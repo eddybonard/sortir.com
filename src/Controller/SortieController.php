@@ -15,6 +15,7 @@ use App\Repository\SortieRepository;
 use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
@@ -117,10 +118,16 @@ class SortieController extends AbstractController
     /**
      * @Route("/accueil/mesSortie{id}", name="sortie_historique")
      */
-    public function historiqueSortie(int $id,SortieRepository $sortieRepository): Response
+    public function historiqueSortie(int $id,
+                                     SortieRepository $sortieRepository,
+                                     PaginatorInterface $paginator,
+                                    Request $request): Response
     {
 
-        $sorties = $sortieRepository->mesSortie($id);
+        $sorties = $paginator->paginate(
+            $sortieRepository->mesSortie($id),
+            $request->query->getInt('page', 1),8
+        );
         return $this->render('main/sortieHistorique.html.twig', [
             'sorties' => $sorties,
         ]);
@@ -286,6 +293,31 @@ class SortieController extends AbstractController
         $this->addFlash('success', 'Inscription réussite');
         return $this->render('main/accueil.html.twig',[
             'sorties'=>$sorties,
+            'campus' =>$campus
+        ]);
+    }
+
+    /**
+     * @Route("/sortie/seDesister{id}", name="sortie_desister")
+     */
+    public function sortieDesister(int $id,
+                                   SortieRepository $sortieRepository,
+                                   CampusRepository $campusRepository,
+                                    EntityManagerInterface $entityManager)
+    {
+        $sorties = $sortieRepository->sortiePlusRecent();
+        $campus = $campusRepository->findall();
+
+        $sortie = $sortieRepository->find($id);
+        $user = $this->getUser();
+
+        $sortie->removeParticipant($user);
+        $entityManager->persist($sortie);
+        $entityManager->flush();
+
+        $this->addFlash('danger', 'Votre désinscription a bien été pris en compte');
+        return $this->render('main/accueil.html.twig',[
+            'sorties' =>$sorties,
             'campus' =>$campus
         ]);
     }
