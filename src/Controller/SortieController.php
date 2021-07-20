@@ -224,7 +224,7 @@ class SortieController extends AbstractController
     /**
      * @Route("/sortie/filtre{id}", name="sortie_filtre")
      */
-    public function filtrerLesSortie(int $id,SortieRepository $sortieRepository,Request $request):Response
+    public function filtrerLesSortie(int $id,SortieRepository $sortieRepository,Request $request,PaginatorInterface $paginator):Response
     {
         $recherche = $request->request->get('sortie');
         $sorties = $sortieRepository->mesSortie($id);
@@ -233,7 +233,10 @@ class SortieController extends AbstractController
         if($recherche != null)
         {
             dump($recherche);
-            $sorties2 = $sortieRepository->sortieTrieeParMot($recherche);
+            $sorties2 = $paginator->paginate(
+                $sortieRepository->sortieTrieeParMot($recherche),
+                $request->query->getInt('page', 1),8
+            );
             return $this->render('main/sortieHistorique.html.twig',[
                 'sorties' => $sorties2,
                 'id' => $user
@@ -266,18 +269,26 @@ class SortieController extends AbstractController
             'lieu' =>$lieu,
             'campus' => $this->getUser()->getCampus(),
             'ville'=>$ville,
-            'participants' => $sortie->getParticipants()
+            'participants' => $sortie->getParticipants(),
+            'date'=>new \DateTime()
+
         ]);
     }
 
     /**
      * @Route("/sortie/inscription{id}", name="sortie_inscription")
      */
-    public function inscriptionSortie(int $id, SortieRepository $sortieRepository, EntityManagerInterface $entityManager,
-                                      CampusRepository $campusRepository, Request $request)
+    public function inscriptionSortie(int $id, SortieRepository $sortieRepository,
+                                      EntityManagerInterface $entityManager,
+                                      CampusRepository $campusRepository,
+                                      Request $request,
+                                        PaginatorInterface $paginator)
     {
 
-        $sorties = $sortieRepository->sortiePlusRecent();
+        $sorties = $paginator->paginate(
+            $sortieRepository->sortiePlusRecent(),
+            $request->query->getInt('page', 1),8
+        );
         $campus = $campusRepository->findall();
 
         $sortie = $sortieRepository->find($id);
@@ -303,9 +314,14 @@ class SortieController extends AbstractController
     public function sortieDesister(int $id,
                                    SortieRepository $sortieRepository,
                                    CampusRepository $campusRepository,
-                                    EntityManagerInterface $entityManager)
+                                    EntityManagerInterface $entityManager,
+                                    PaginatorInterface $paginator,
+                                    Request $request)
     {
-        $sorties = $sortieRepository->sortiePlusRecent();
+        $sorties = $paginator->paginate(
+            $sortieRepository->sortiePlusRecent(),
+            $request->query->getInt('page', 1),8
+        );
         $campus = $campusRepository->findall();
 
         $sortie = $sortieRepository->find($id);

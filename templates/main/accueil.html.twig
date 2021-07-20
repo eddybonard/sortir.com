@@ -53,12 +53,6 @@
                                                     <a href="{{ path('sortie_affichage', {'id' : sortie.id}) }}" class="btn btn-primary">Afficher</a>
                                                  {% else %}
                                                     <a href="{{ path('sortie_affichage', {'id' : sortie.id}) }}" class="btn btn-primary">Afficher</a>
-                                                     <form class="mt-2" action="{{ path('sortie_inscription', {'id': sortie.id}) }}" method="post">
-                                                         <button class=" inscription btn btn-outline-success" type="submit" name="inscription"  value="inscription" onclick="boutonInsciption()">+ S'inscrire</button>
-                                                     </form>
-                                                     <form class="mt-2" action="{{ path('sortie_desister', {'id': sortie.id}) }}" method="post">
-                                                         <button class="btn btn-outline-danger" type="submit" id="desincriptions" name="desincriptions"  value="inscription">- Se désister</button>
-                                                     </form>
                                                  {% endif  %}
                                             </div>
                                         </div>
