@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 
+use App\Entity\Etat;
 use App\Entity\Lieu;
 
 use App\Entity\Sortie;
@@ -118,8 +119,7 @@ class SortieController extends AbstractController
     /**
      * @Route("/accueil/mesSortie{id}", name="sortie_historique")
      */
-    public function historiqueSortie(int $id,
-                                     SortieRepository $sortieRepository,
+    public function historiqueSortie(int $id, SortieRepository $sortieRepository,
                                      PaginatorInterface $paginator,
                                     Request $request): Response
     {
@@ -242,6 +242,7 @@ class SortieController extends AbstractController
         }
         return $this->render('main/sortieHistorique.html.twig',[
             'sorties' => $sorties,
+
         ]);
 
     }
@@ -309,6 +310,37 @@ class SortieController extends AbstractController
         $this->addFlash('danger', 'Votre désinscription a bien été pris en compte');
         return $this->redirectToRoute('sortie_affichage',[
             'id' =>$sortie->getId(),
+        ]);
+    }
+
+    /**
+     * @Route("/sortie/annulation{id}", name="sortie_annulation")
+     */
+    public function annulationSortie(int $id, SortieRepository $sortieRepository,
+                                     Request $request,
+                                        EntityManagerInterface $entityManager)
+    {
+        $sortie = $sortieRepository->find($id);
+        $annuler = $request->request->get('annuler');
+        dump($annuler);
+        if ($annuler != null)
+        {
+
+            $sortie->getEtat()->setLibelle('Annuler');
+            $entityManager->persist($sortie);
+            $entityManager->flush();
+
+            $this->addFlash('danger', 'Votre sortie bien été annulée');
+            return $this->redirectToRoute('main_accueil');
+        }
+
+
+
+        return $this->render('main/sortieAnnulation.html.twig', [
+            'sortie' =>$sortie,
+             'campus' => $this->getUser()->getCampus(),
+            'lieu' => $sortie->getLieu(),
+            'ville' => $sortie->getLieu()->getVille()
         ]);
     }
 }

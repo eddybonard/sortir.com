@@ -13,6 +13,12 @@ function modifierProfil()
     window.confirm('Etes-vous sur de vouloir modifier votre profil ?')
 }
 
+function annulerSortie()
+{
+    window.confirm('Etes-vous sur de vouloir annuler cette sortie ?')
+}
+
+
 function supprimerVille() {
 
 

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} - Annulation{% endblock %}
+
+{% block body %}
+    <div class="jumbotron  text-center" >
+        <h1>Annuler "{{ sortie.nom }}"</h1>
+    </div>
+
+    <div class="container ">
+        <div class="row "  >
+            <div class="col-lg-12 mb-2">
+                <div class=" ml-3 ">
+                    <div >
+                        <form action="{{ path('sortie_annulation', {'id': sortie.id}) }}" method="post">
+                            <label for="nomSortie">Nom de la sortie : </label><input type="text" class="form-control" id="nomSortie" name="nomSortie" readonly value="{{ sortie.nom }}" >
+                            <label for="dateSortie">Date de la sortie : </label><input type="text" class="form-control" id="dateSortie" name="dateSortie" readonly value="{{ sortie.dateHeureDebut | date('d/m/Y') }}" >
+                            <label for="campus">Campus : </label><input type="text" class="form-control" id="campus" name="campus" readonly value="{{ campus.nom }}" >
+                            <label for="lieu">Lieu : </label><input type="text" class="form-control" id="lieu" name="lieu" readonly value="{{ lieu.nom }} {{ lieu.rue }} {{ ville.codePostal }} {{ ville.nom }}" >
+                            <label for="motif">Motif : </label><textarea style="resize: none"   id="motif" name="motif" class="form-control" ></textarea>
+                            <div class="mt-2 mb-2">
+                                <button class="btn btn-danger " type="submit" value="annuler" id="annuler" name="annuler" onclick="annulerSortie()">Annuler la sortie</button>
+                            </div>
+                            <input type="hidden" name="_csrf_token"
+                                   value="{{ csrf_token('authenticate') }}">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+
+

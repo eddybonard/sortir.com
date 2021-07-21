@@ -30,6 +30,8 @@ class SortieRepository extends ServiceEntityRepository
     public function paginationListe()
     {
         return $this->createQueryBuilder('s')
+            ->andWhere('s.dateHeureDebut >= :date')
+            ->setParameter('date',new \DateTime)
             ->orderBy('s.dateHeureDebut','ASC')
             ;
     }
@@ -47,7 +49,7 @@ class SortieRepository extends ServiceEntityRepository
     public function sortieTrieeParMot($value): array
     {
         return $this->createQueryBuilder('s')
-            ->andWhere('s.nom LIKE :value')
+            ->andWhere('s.nom LIKE :value ')
             ->setParameter('value', '%'.$value.'%')
             ->addOrderBy('s.nom')
             ->getQuery()
@@ -60,6 +62,7 @@ class SortieRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('s')
             ->andWhere('s.campusOrganisateur = :value')
             ->setParameter('value', $value)
+            ->addOrderBy('s.dateHeureDebut')
             ->getQuery()
             ->getResult()
             ;

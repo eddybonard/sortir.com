@@ -2,21 +2,16 @@
 
 namespace App\Controller;
 
-use App\Entity\Campus;
-use App\Entity\Etat;
-use App\Entity\Lieu;
+
 use App\Entity\Participant;
-use App\Entity\Sortie;
-use App\Entity\Ville;
-use App\Form\LieuType;
+
 use App\Form\ModifProfilType;
-use App\Form\RegistrationFormType;
-use App\Form\SortieType;
+
 use App\Repository\CampusRepository;
-use App\Repository\EtatRepository;
+
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
-use App\Repository\VilleRepository;
+
 use App\Security\AppAuthentificationAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -48,9 +43,11 @@ class MainController extends AbstractController
         );
         $campus = $campusRepository->findall();
 
+
         return $this->render('main/accueil.html.twig', [
             'sorties'=>$sorties,
             'campus' =>$campus
+
         ]);
     }
 
