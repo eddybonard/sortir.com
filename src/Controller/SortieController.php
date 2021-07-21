@@ -150,7 +150,6 @@ class SortieController extends AbstractController
         $formLieu->handleRequest($request);
         $formSortie->handleRequest($request);
 
-
         if($formSortie->isSubmitted() && $formSortie->isValid())
         {
             if ($formSortie->get('photo')->getData() == null)
@@ -174,7 +173,6 @@ class SortieController extends AbstractController
                 }
                 $sortie->setPhoto($imageName);
             }
-
 
             $user = $this->getUser()->getId();
             $entityManager->persist($sortie);
@@ -261,6 +259,7 @@ class SortieController extends AbstractController
         $lieuDeLaSortie = $sortie->getLieu();
         $lieu = $lieuRepository->find($lieuDeLaSortie);
         $ville = $villeRepository->find($lieu);
+        $user = $this->getUser();
 
         dump($sortie);
 
@@ -270,7 +269,8 @@ class SortieController extends AbstractController
             'campus' => $this->getUser()->getCampus(),
             'ville'=>$ville,
             'participants' => $sortie->getParticipants(),
-            'date'=>new \DateTime()
+            'date'=>new \DateTime(),
+            'isParticipant'=>$sortie->getParticipants()->contains($user)
 
         ]);
     }
@@ -278,23 +278,10 @@ class SortieController extends AbstractController
     /**
      * @Route("/sortie/inscription{id}", name="sortie_inscription")
      */
-    public function inscriptionSortie(int $id, SortieRepository $sortieRepository,
-                                      EntityManagerInterface $entityManager,
-                                      CampusRepository $campusRepository,
-                                      Request $request,
-                                        PaginatorInterface $paginator)
+    public function inscriptionSortie(int $id, SortieRepository $sortieRepository, EntityManagerInterface $entityManager)
     {
-
-        $sorties = $paginator->paginate(
-            $sortieRepository->sortiePlusRecent(),
-            $request->query->getInt('page', 1),8
-        );
-        $campus = $campusRepository->findall();
-
         $sortie = $sortieRepository->find($id);
         $user = $this->getUser();
-        $bouton = $request->request->get('inscription');
-        dump($bouton);
 
         $sortie->addParticipant($user);
         $entityManager->persist($sortie);
@@ -302,28 +289,16 @@ class SortieController extends AbstractController
         dump($sortie->getParticipants());
 
         $this->addFlash('success', 'Inscription réussite');
-        return $this->render('main/accueil.html.twig',[
-            'sorties'=>$sorties,
-            'campus' =>$campus
+        return $this->redirectToRoute('sortie_affichage',[
+            'id'=>$sortie->getId()
         ]);
     }
 
     /**
      * @Route("/sortie/seDesister{id}", name="sortie_desister")
      */
-    public function sortieDesister(int $id,
-                                   SortieRepository $sortieRepository,
-                                   CampusRepository $campusRepository,
-                                    EntityManagerInterface $entityManager,
-                                    PaginatorInterface $paginator,
-                                    Request $request)
+    public function sortieDesister(int $id, SortieRepository $sortieRepository, EntityManagerInterface $entityManager)
     {
-        $sorties = $paginator->paginate(
-            $sortieRepository->sortiePlusRecent(),
-            $request->query->getInt('page', 1),8
-        );
-        $campus = $campusRepository->findall();
-
         $sortie = $sortieRepository->find($id);
         $user = $this->getUser();
 
@@ -332,9 +307,8 @@ class SortieController extends AbstractController
         $entityManager->flush();
 
         $this->addFlash('danger', 'Votre désinscription a bien été pris en compte');
-        return $this->render('main/accueil.html.twig',[
-            'sorties' =>$sorties,
-            'campus' =>$campus
+        return $this->redirectToRoute('sortie_affichage',[
+            'id' =>$sortie->getId(),
         ]);
     }
 }

@@ -16,7 +16,10 @@
                        <label for="dateLimite"></label>Date limite d'inscription : <input type="text" class="form-control" id="dateLimite" name="dateLimite" readonly value="{{ sortie.dateLimiteInscription | date('d/m/Y') }}" >
                        <label for="places"></label>Nombres de places : <input type="text" class="form-control" id="places" name="places" readonly value="{{ sortie.nbInscriptionMax }}" >
                        <label for="duree"></label>Durée : <input type="text" class="form-control" id="duree" name="duree" readonly value="{{ sortie.duree }} minutes" >
-                       <label for="description"></label>Description et infos : <input type="text" class="form-control" id="description" name="description" readonly value="{{ sortie.infoSortie }}" >
+                       <label for="description"></label><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                           <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                           <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                       </svg> Description : <input type="text" class="form-control" id="description" name="description" readonly value="{{ sortie.infoSortie }}" >
                        <input type="hidden" name="_csrf_token"
                               value="{{ csrf_token('authenticate') }}">
                    </form>
@@ -25,13 +28,16 @@
             <hr>
             <div class="col-lg-4 mb-2">
                 <div class="w-50">
-                    <h5>Lieu </h5>
+                    <h5>Lieu <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-geo-alt" viewBox="0 0 16 16">
+                            <path d="M12.166 8.94c-.524 1.062-1.234 2.12-1.96 3.07A31.493 31.493 0 0 1 8 14.58a31.481 31.481 0 0 1-2.206-2.57c-.726-.95-1.436-2.008-1.96-3.07C3.304 7.867 3 6.862 3 6a5 5 0 0 1 10 0c0 .862-.305 1.867-.834 2.94zM8 16s6-5.686 6-10A6 6 0 0 0 2 6c0 4.314 6 10 6 10z"/>
+                            <path d="M8 8a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0 1a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/>
+                        </svg> </h5>
                     <form>
                         <label for="campus">Campus: </label><input type="text" class="form-control" id="campus" name="campus" readonly value="{{ campus.nom }}" >
                         <label for="lieu">Lieu : </label><input type="text" class="form-control" id="lieu" name="lieu" readonly value="{{ lieu.nom }}" >
                         <label for="rue"></label>Rue : <input type="text" class="form-control" id="rue" name="rue" readonly value="{{ lieu.rue }}" >
                         <label for="codepostal"></label>Code postal : <input type="text" class="form-control" id="codepostal" name="codepostal" readonly value="{{ ville.codePostal }}" >
-                        <label for="latitude"></label>Latitude : <input type="text" class="form-control" id="Latitude" name="Latitude" readonly value="{{ lieu.latitude }} minutes" >
+                        <label for="latitude"></label>Latitude : <input type="text" class="form-control" id="Latitude" name="Latitude" readonly value="{{ lieu.latitude }} " >
                         <label for="longitude"></label>Longitude : <input type="text" class="form-control" id="longitude" name="longitude" readonly value="{{ lieu.longitude }}" >
                         <input type="hidden" name="_csrf_token"
                                value="{{ csrf_token('authenticate') }}">
@@ -41,14 +47,17 @@
             <div class="col-lg-4">
                 <div class="mb-2">
                     {% if sortie.dateLimiteInscription >  date %}
-                        <form class="mt-2" action="{{ path('sortie_inscription', {'id': sortie.id}) }}" method="post">
-                            <button class=" inscription btn btn-outline-success" type="submit" name="inscription"  value="inscription" onclick="boutonInsciption()">+ S'inscrire</button>
-                        </form>
-                        <form class="mt-2" action="{{ path('sortie_desister', {'id': sortie.id}) }}" method="post">
-                            <button class="btn btn-outline-danger" type="submit" id="desincriptions" name="desincriptions"  value="inscription">- Se désister</button>
-                        </form>
+                        {% if isParticipant %}
+                                <form class="mt-2" name="formDesincription"  id="formDesincription"  action="{{ path('sortie_desister', {'id': sortie.id}) }}" method="post">
+                                    <button class="btn btn-outline-danger" type="submit" id="desincriptions" name="desincriptions"  value="desincriptions">- Se désister</button>
+                                </form>
+                            {% else %}
+                                <form class="mt-2" name="formInscription"  id="formInscription" action="{{ path('sortie_inscription', {'id': sortie.id}) }}" method="post">
+                                    <button class=" inscription btn btn-outline-success" type="submit" id="inscription" name="inscription"  value="inscription"> + S'inscrire</button>
+                                </form>
+                        {% endif %}
                     {% else %}
-                        <button class=" cloture btn btn-outline-danger"  name="cloture"  value="cloture" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-circle" viewBox="0 0 16 16">
+                        <button class=" cloture btn btn-outline" style="border-color: red; color:red"   name="cloture"  value="cloture" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-circle" viewBox="0 0 16 16">
                                 <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                                 <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
                             </svg>&nbsp;Cloturée</button>
