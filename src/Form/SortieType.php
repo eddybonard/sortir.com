@@ -52,6 +52,7 @@ class SortieType extends AbstractType
 
             ->add('lieu', EntityType::class, [
                 'class' => Lieu::class,
+                'label' =>'Choix du lieu : ',
                 'choice_label' => 'nom'
             ])
             ->add('photo', FileType::class, [
@@ -71,10 +72,6 @@ class SortieType extends AbstractType
                         'mimeTypesMessage' => 'Format de l\'image non valide'
                     ])
                 ]
-            ])
-            ->add('etat', EntityType::class, [
-                'class' => Etat::class,
-                'choice_label' => 'libelle'
             ])
 
         ;

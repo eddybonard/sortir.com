@@ -30,7 +30,7 @@ class SortieRepository extends ServiceEntityRepository
     public function paginationListe()
     {
         return $this->createQueryBuilder('s')
-            ->andWhere('s.dateHeureDebut >= :date')
+            ->andWhere('s.dateHeureDebut >= :date AND s.etat != 3 ')
             ->setParameter('date',new \DateTime)
             ->orderBy('s.dateHeureDebut','ASC')
             ;

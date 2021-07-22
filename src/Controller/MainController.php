@@ -9,6 +9,7 @@ use App\Form\ModifProfilType;
 
 use App\Repository\CampusRepository;
 
+use App\Repository\EtatRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
 
@@ -35,18 +36,23 @@ class MainController extends AbstractController
     public function accueil(SortieRepository $sortieRepository,
                             PaginatorInterface $paginator,
                             CampusRepository $campusRepository,
-                            Request $request): Response
+                            Request $request,
+                            EtatRepository $etatRepository): Response
     {
         $sorties = $paginator->paginate(
             $sortieRepository->sortiePlusRecent(),
             $request->query->getInt('page',1),8
         );
-        $campus = $campusRepository->findall();
 
+        $campus = $campusRepository->findall();
+        $etatAnnuler = $etatRepository->find(5);
 
         return $this->render('main/accueil.html.twig', [
             'sorties'=>$sorties,
-            'campus' =>$campus
+            'campus' =>$campus,
+            'etatAnnuler'=>$etatAnnuler,
+
+
 
         ]);
     }
@@ -146,7 +152,7 @@ class MainController extends AbstractController
             $sortieRepository->sortieTrieeParCampus($recherche),
             $request->query->getInt('page', 1),8
         );
-            dump($recherche);
+
             return $this->render('main/accueil.html.twig', [
                 'campus' => $campus,
                 'sorties' =>$sorties

@@ -11,12 +11,14 @@ use App\Form\LieuType;
 use App\Form\SortieType;
 use App\Repository\CampusRepository;
 
+use App\Repository\EtatRepository;
 use App\Repository\LieuRepository;
 use App\Repository\SortieRepository;
 use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 use Knp\Component\Pager\PaginatorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,7 +37,7 @@ class SortieController extends AbstractController
                                  EntityManagerInterface $entityManager,
                                  SluggerInterface $slugger,
                                  SortieRepository $sortieRepository,
-                                    CampusRepository $campusRepository
+                                    EtatRepository $etatRepository
                            )
     {
         $sortie = new Sortie();
@@ -75,8 +77,7 @@ class SortieController extends AbstractController
             $sortie->setDatePublication(new \DateTime());
             $sortie->setOrganisateur($paticipant);
             $sortie->setCampusOrganisateur($campusOrganisateur);
-            $entityManager->persist($sortie);
-            $entityManager->flush();
+
 
             $publier = $request->request->get('publier');
             $sauvegarder = $request->request->get('safe');
@@ -84,6 +85,10 @@ class SortieController extends AbstractController
             if($publier != null)
             {
                 $sorties = $sortieRepository->findAll();
+                $etatOuvert = $etatRepository->find(4);
+                $sortie->setEtat($etatOuvert);
+                $entityManager->persist($sortie);
+                $entityManager->flush();
                 $this->addFlash('success', 'Votre sortie à bien été publiée');
                 return $this->redirectToRoute('main_accueil', [
                     'sorties' => $sorties
@@ -91,6 +96,10 @@ class SortieController extends AbstractController
             }else
             {
                 $user = $this->getUser()->getId();
+                $etatCreation = $etatRepository->find(3);
+                $sortie->setEtat($etatCreation);
+                $entityManager->persist($sortie);
+                $entityManager->flush();
                 $this->addFlash('success', 'Votre sortie à bien été sauvegardée');
                 return $this->redirectToRoute('sortie_historique', [
                     'id' => $user
@@ -227,10 +236,10 @@ class SortieController extends AbstractController
         $recherche = $request->request->get('sortie');
         $sorties = $sortieRepository->mesSortie($id);
         $user = $this->getUser()->getId();
-        dump($recherche);
+
         if($recherche != null)
         {
-            dump($recherche);
+
             $sorties2 = $paginator->paginate(
                 $sortieRepository->sortieTrieeParMot($recherche),
                 $request->query->getInt('page', 1),8
@@ -262,7 +271,6 @@ class SortieController extends AbstractController
         $ville = $villeRepository->find($lieu);
         $user = $this->getUser();
 
-        dump($sortie);
 
         return $this->render('main/afficherLaSortie.html.twig', [
             'sortie' =>$sortie,
@@ -287,7 +295,7 @@ class SortieController extends AbstractController
         $sortie->addParticipant($user);
         $entityManager->persist($sortie);
         $entityManager->flush();
-        dump($sortie->getParticipants());
+
 
         $this->addFlash('success', 'Inscription réussite');
         return $this->redirectToRoute('sortie_affichage',[
@@ -316,17 +324,18 @@ class SortieController extends AbstractController
     /**
      * @Route("/sortie/annulation{id}", name="sortie_annulation")
      */
-    public function annulationSortie(int $id, SortieRepository $sortieRepository,
+    public function annulationSortie(int $id,SortieRepository $sortieRepository,
                                      Request $request,
-                                        EntityManagerInterface $entityManager)
+                                        EntityManagerInterface $entityManager,
+                                    EtatRepository $etatRepository)
     {
         $sortie = $sortieRepository->find($id);
         $annuler = $request->request->get('annuler');
-        dump($annuler);
+
         if ($annuler != null)
         {
-
-            $sortie->getEtat()->setLibelle('Annuler');
+          $etatAnnuler = $etatRepository->find(5);
+          $sortie->setEtat($etatAnnuler);
             $entityManager->persist($sortie);
             $entityManager->flush();
 

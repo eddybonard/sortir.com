@@ -42,6 +42,16 @@ function suprimmerSortie() {
 
 
 
+        function formulaireLieu(formulairelieu) {
+            document.getElementById(formulairelieu).style.display = "block"
+        }
+
+
+
+
+
+
+
    var boutonInscription = document.getElementById("inscription");
    var boutonDesincription = document.getElementById("desincriptions");
        boutonInscription.addEventListener("click", ()=>{
