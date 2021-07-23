@@ -82,4 +82,67 @@ class RegistrationController extends AbstractController
             'registrationForm' => $form->createView(),
         ]);
     }
+
+    /**
+     * @Route("/inscription/admin", name="registerAdmin_formulaireInscription")
+     */
+    public function registerAdmin(Request $request,
+                             UserPasswordEncoderInterface $passwordEncoder,
+                             GuardAuthenticatorHandler $guardHandler,
+                             AppAuthentificationAuthenticator $authenticator,
+                             SluggerInterface $slugger): Response
+    {
+        $user = new Participant();
+        $user->setRoles(["ROLE_PARTICIPANT"]);
+        $user->setAdministrateur(false);
+        $user->setActif(true);
+        $form = $this->createForm(RegistrationFormType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($form->get('photo')->getData() == null)
+            {
+                $user->setPhoto('avatarDefault.jpg');
+            }
+            else{
+                $imageFile = $form->get('photo')->getData();
+                if ($imageFile)
+                {
+
+                    $originalImageName = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                    $safeImageName =$slugger->slug($originalImageName);
+                    $imageName = $safeImageName.'-'.uniqid().'.'.$imageFile->guessExtension();
+                    try {
+                        $imageFile->move(
+                            $this->getParameter('brochures_directory'),
+                            $imageName);
+                    }catch (FileException$e)
+                    {
+                        return $e->getTrace();
+                    }
+                    $user->setPhoto($imageName);
+                }
+
+            }
+
+            $user->setPassword(
+                $passwordEncoder->encodePassword(
+                    $user,
+                    $form->get('plainPassword')->getData()
+                )
+            );
+
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($user);
+            $entityManager->flush();
+            // do anything else you need here, like send an email
+
+            $this->addFlash('success','Votre participant a bien été rajouté');
+            return $this->redirectToRoute('main_accueil');
+        }
+
+        return $this->render('inscription/inscription.html.twig', [
+            'registrationForm' => $form->createView(),
+        ]);
+    }
 }
