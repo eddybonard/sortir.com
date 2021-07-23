@@ -14,13 +14,13 @@
                         {{ form_start(formSortie) }}
 
                      {{ form_label(formSortie.lieu) }}
-                     {{ form_widget(formSortie.lieu) }}
-                     <a href="#formulairelieu"><button style="border: none; background:none;" type="button" onclick="formulaireLieu('formulairelieu')"  id="boutonFormulaireLieu"  >
+                     {{ form_widget(formSortie.lieu) }}<a href="#formulairelieu"><button style="border: none; background:none;" type="button" onclick="formulaireLieu('formulairelieu')"  id="boutonFormulaireLieu"  >
                              <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" color="green" class="bi bi-plus-circle" viewBox="0 0 16 16">
                                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                                  <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                              </svg>
                          </button></a><br>
+
                         {{ form_label(formSortie.nom) }}
                         {{ form_widget(formSortie.nom) }}
 
@@ -43,7 +43,10 @@
                      <input class="form-control" readonly type="text" id="campus" name="campus" value="{{ campus.nom }}">
 
 
-                     {{ form_label(formSortie.photo) }}
+                     {{ form_label(formSortie.photo) }}&nbsp;<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-image" viewBox="0 0 16 16">
+                         <path d="M8.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+                         <path d="M12 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM3 2a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v8l-2.083-2.083a.5.5 0 0 0-.76.063L8 11 5.835 9.7a.5.5 0 0 0-.611.076L3 12V2z"/>
+                     </svg>
                      {{ form_widget(formSortie.photo) }}
 
 
@@ -86,8 +89,6 @@
                                     <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
                                 </svg>
                             </button>
-
-
                         </div>
                         <input type="hidden" name="_csrf_token"
                                value="{{ csrf_token('authenticate') }}">
