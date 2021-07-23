@@ -59,7 +59,7 @@
                     <tr>
                             <td>{{ ville.nom | upper}}</td>
                             <td>{{ ville.codePostal }}</td>
-                            <td><button href="submit"  class="btn btn-outline-danger" onclick="supprimerVille()">Supprimer</button></td>
+                            <td><a href="{{ path('admin_suprimmerVille', {'id': ville.id}) }}"><button  class="btn btn-outline-danger" onclick="supprimerVille()">Supprimer</button></a></td>
                     </tr>
                     {% endfor %}
                 </tbody>

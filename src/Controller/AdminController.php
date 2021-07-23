@@ -27,7 +27,7 @@ class AdminController extends AbstractController
 
             $villes = $villeRepository->villeTrieeParMot($recherche);
 
-            return $this->render('main/ville.html.twig' , [
+            return $this->render('admin/ville.html.twig' , [
                 'villes' => $villes,
             ]);
         }
@@ -48,7 +48,7 @@ class AdminController extends AbstractController
             $villes = $villeRepository->findAll();
 
             $this->addFlash('success','Votre ville a été ajoutée');
-            return $this->render('main/ville.html.twig' , [
+            return $this->render('admin/ville.html.twig' , [
                 'villes' => $villes,
             ]);
 
@@ -57,7 +57,7 @@ class AdminController extends AbstractController
 
 
 
-        return $this->render('main/ville.html.twig' , [
+        return $this->render('admin/ville.html.twig' , [
             'villes' => $villeRepository->findAll(),
         ]);
     }
@@ -73,7 +73,7 @@ class AdminController extends AbstractController
             dump($recherche);
             $campus = $campusRepository->campusTrieeParMot($recherche);
 
-            return $this->render('main/campus.html.twig' , [
+            return $this->render('admin/campus.html.twig' , [
                 'campus' => $campus,
             ]);
         }
@@ -91,7 +91,7 @@ class AdminController extends AbstractController
             $campus = $campusRepository->findAll();
 
             $this->addFlash('success','Votre ville a été ajoutée');
-            return $this->render('main/campus.html.twig' , [
+            return $this->render('admin/campus.html.twig' , [
                 'campus' => $campus,
             ]);
 
@@ -100,7 +100,7 @@ class AdminController extends AbstractController
 
         $campus = $campusRepository->findAll();
 
-        return $this->render('main/campus.html.twig' , [
+        return $this->render('admin/campus.html.twig' , [
             'campus' => $campus,
         ]);
     }
@@ -147,4 +147,31 @@ class AdminController extends AbstractController
         $this->addFlash('danger', 'Participant suprimmé');
         return $this->redirectToRoute('main_accueil');
     }
+
+    /**
+     * @Route("/admin/suprimmerVille{id}", name="admin_suprimmerVille")
+     */
+    public function suprimmerVille(int $id, VilleRepository $villeRepository, EntityManagerInterface $entityManager)
+    {
+        $ville = $villeRepository->find($id);
+        $entityManager->remove($ville);
+        $entityManager->flush();
+
+        $this->addFlash('danger', 'Ville suprimmée');
+        return $this->redirectToRoute('admin_ville');
+    }
+
+    /**
+     * @Route("/admin/suprimmerCampus{id}", name="admin_suprimmerCampus")
+     */
+    public function suprimmerCampus(int $id, CampusRepository $campusRepository, EntityManagerInterface $entityManager)
+    {
+        $campus = $campusRepository->find($id);
+        $entityManager->remove($campus);
+        $entityManager->flush();
+
+        $this->addFlash('danger', 'Campus suprimmée');
+        return $this->redirectToRoute('admin_campus');
+    }
+
 }
