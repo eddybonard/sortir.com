@@ -57,6 +57,13 @@ function desactiverParticipant() {
 
 }
 
+function suprimmerParticipant() {
+
+
+    window.confirm('Etes-vous sur de vouloir suprimmer ce participant ?')
+
+}
+
 
    var boutonInscription = document.getElementById("inscription");
    var boutonDesincription = document.getElementById("desincriptions");
