@@ -121,17 +121,30 @@ class AdminController extends AbstractController
     }
 
     /**
-     * @Route("/accueil/desactiverParticipant{id}", name="admin_desactiverParticipant")
+     * @Route("/accueil/activerParticipant{id}", name="admin_activerParticipant")
      */
     public function activerParticipant(int $id, ParticipantRepository $participantRepository, EntityManagerInterface $entityManager)
     {
         $participant = $participantRepository->find($id);
-        $participant->setActif(0);
+        $participant->setActif(1);
         $entityManager->persist($participant);
         $entityManager->flush();
 
 
-        $this->addFlash('danger', 'Participant désactivé');
+        $this->addFlash('success', 'Participant activé');
+        return $this->redirectToRoute('main_accueil');
+    }
+
+    /**
+     * @Route("/admin/suprimmerParticipant{id}", name="admin_suprimmerParticipant")
+     */
+    public function suprimmerParticipant(int $id, ParticipantRepository $participantRepository, EntityManagerInterface $entityManager)
+    {
+        $participant = $participantRepository->find($id);
+        $entityManager->remove($participant);
+        $entityManager->flush();
+
+        $this->addFlash('danger', 'Participant suprimmé');
         return $this->redirectToRoute('main_accueil');
     }
 }

@@ -40,16 +40,22 @@ function suprimmerSortie() {
 
 }
 
+function formulaireLieu(formulairelieu) {
+    document.getElementById(formulairelieu).style.display = "block"
+}
+
+function activerParticipant() {
+
+    window.confirm('Etes-vous sur de vouloir activer ce participant ?')
+
+}
+
+function desactiverParticipant() {
 
 
-        function formulaireLieu(formulairelieu) {
-            document.getElementById(formulairelieu).style.display = "block"
-        }
+    window.confirm('Etes-vous sur de vouloir désactiver ce participant ?')
 
-
-
-
-
+}
 
 
    var boutonInscription = document.getElementById("inscription");
