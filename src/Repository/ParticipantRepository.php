@@ -36,6 +36,14 @@ class ParticipantRepository extends ServiceEntityRepository implements PasswordU
         $this->_em->flush();
     }
 
+
+    public function listeDesParticpantsConnecte()
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.administrateur != 1')
+            ->getQuery()
+            ->getResult();
+    }
     // /**
     //  * @return Participant[] Returns an array of Participant objects
     //  */

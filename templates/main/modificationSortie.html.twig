@@ -12,6 +12,14 @@
                 <div class="w-50">
                     {% form_theme formSortie 'bootstrap_4_layout.html.twig' %}
                     {{ form_start(formSortie) }}
+                    {{ form_label(formSortie.lieu) }}
+                    {{ form_widget(formSortie.lieu) }}
+                    <a href="#formulairelieu"><button style="border: none; background:none;" type="button" onclick="formulaireLieu('formulairelieu')"  id="boutonFormulaireLieu"  >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" color="green" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                            </svg>
+                        </button></a><br>
                     {{ form_label(formSortie.nom) }}
                     {{ form_widget(formSortie.nom) }}
 
@@ -31,15 +39,10 @@
                     {{ form_widget(formSortie.infoSortie) }}
 
 
-
-                    {{ form_label(formSortie.lieu) }}
-                    {{ form_widget(formSortie.lieu) }}
-
                     {{ form_label(formSortie.photo) }}
                     {{ form_widget(formSortie.photo) }}
 
-                    {{ form_label(formSortie.etat) }}
-                    {{ form_widget(formSortie.etat) }}
+
 
                     <div class="mt-2 mb-2 text-center">
                         <button type="submit" class="btn btn-outline-success " >Modifier la sortie</button>
@@ -53,7 +56,7 @@
             </div>
             <hr>
             <div class="col-lg-6 mb-2">
-                <div class="w-50 text-center">
+                <div class="w-50 text-center" id="formulairelieu" style="display: none;">
                     <h1>Ajouter un lieu</h1>
                     {% form_theme formLieu 'bootstrap_4_layout.html.twig' %}
                     {{ form_start(formLieu) }}

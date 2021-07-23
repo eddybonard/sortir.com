@@ -37,7 +37,8 @@ class MainController extends AbstractController
                             PaginatorInterface $paginator,
                             CampusRepository $campusRepository,
                             Request $request,
-                            EtatRepository $etatRepository): Response
+                            EtatRepository $etatRepository,
+                            ParticipantRepository $participantRepository): Response
     {
         $sorties = $paginator->paginate(
             $sortieRepository->sortiePlusRecent(),
@@ -45,12 +46,14 @@ class MainController extends AbstractController
         );
 
         $campus = $campusRepository->findall();
+        $participants = $participantRepository->listeDesParticpantsConnecte();
         $etatAnnuler = $etatRepository->find(5);
 
         return $this->render('main/accueil.html.twig', [
             'sorties'=>$sorties,
             'campus' =>$campus,
             'etatAnnuler'=>$etatAnnuler,
+            'participants'=>$participants
 
 
 
@@ -144,9 +147,11 @@ class MainController extends AbstractController
     public function filtrerLesSortie(Request $request,
                                      CampusRepository $campusRepository,
                                      SortieRepository $sortieRepository,
-                                    PaginatorInterface $paginator)
+                                    PaginatorInterface $paginator,
+                                    EtatRepository $etatRepository)
     {
         $recherche = $request->request->get('campus');
+        $etatAnnuler = $etatRepository->find(5);
         $campus = $campusRepository->findAll();
         $sorties = $paginator->paginate(
             $sortieRepository->sortieTrieeParCampus($recherche),
@@ -155,12 +160,17 @@ class MainController extends AbstractController
 
             return $this->render('main/accueil.html.twig', [
                 'campus' => $campus,
-                'sorties' =>$sorties
+                'sorties' =>$sorties,
+                'etatAnnuler'=>$etatAnnuler
+
             ]);
 
 
 
     }
+
+
+
 
 
 

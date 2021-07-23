@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Campus;
 use App\Entity\Ville;
 use App\Repository\CampusRepository;
+use App\Repository\ParticipantRepository;
 use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -102,5 +103,35 @@ class AdminController extends AbstractController
         return $this->render('main/campus.html.twig' , [
             'campus' => $campus,
         ]);
+    }
+
+    /**
+     * @Route("/accueil/desactiverParticipant{id}", name="admin_desactiverParticipant")
+     */
+    public function desactiverParticipant(int $id, ParticipantRepository $participantRepository, EntityManagerInterface $entityManager)
+    {
+        $participant = $participantRepository->find($id);
+        $participant->setActif(0);
+        $entityManager->persist($participant);
+        $entityManager->flush();
+
+
+        $this->addFlash('danger', 'Participant désactivé');
+        return $this->redirectToRoute('main_accueil');
+    }
+
+    /**
+     * @Route("/accueil/desactiverParticipant{id}", name="admin_desactiverParticipant")
+     */
+    public function activerParticipant(int $id, ParticipantRepository $participantRepository, EntityManagerInterface $entityManager)
+    {
+        $participant = $participantRepository->find($id);
+        $participant->setActif(0);
+        $entityManager->persist($participant);
+        $entityManager->flush();
+
+
+        $this->addFlash('danger', 'Participant désactivé');
+        return $this->redirectToRoute('main_accueil');
     }
 }

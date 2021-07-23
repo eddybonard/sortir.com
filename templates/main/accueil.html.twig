@@ -100,6 +100,39 @@
                 </div>
             </div>
         </div>
+        <div class="dropright">
+            <button class="btn btn dropdown-toggle" data-toggle="dropdown" type="button" id="deroulantP" style=" background-color: #7952b3;
+                                                                                                                color:white;
+                                                                                                                position: fixed;
+                                                                                                                left: 0px;
+                                                                                                                top: 100px;
+                                                                                                                 clip-path: circle();
+                                                                                                                 width : 60px;
+                                                                                                                height :60px;
+                                                                                                                font-size: 1.5em"
+            >P</button>
+            <div class="dropdown-menu dropdown-menu-lg-right " aria-labelledby="deroulantP" >
+            {% for participant in participants %}
+                <div class="dropright-item">
+                    <p>&nbsp;
+                        {% if participant.actif != 0 %}
+                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" color="green" fill="currentColor" class="bi bi-toggle-on" viewBox="0 0 16 16">
+                            <path d="M5 3a5 5 0 0 0 0 10h6a5 5 0 0 0 0-10H5zm6 9a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"/>
+                        </svg>&nbsp;{{ participant.pseudo }} / {{ participant.nom }}
+                        {% else %}
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" color="red" fill="currentColor" class="bi bi-toggle-on" viewBox="0 0 16 16">
+                                <path d="M5 3a5 5 0 0 0 0 10h6a5 5 0 0 0 0-10H5zm6 9a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"/>
+                            </svg>&nbsp;{{ participant.pseudo }} / {{ participant.nom }}
+                        {% endif %}
+
+                            <a href="{{path('admin_desactiverParticipant', {'id': participant.id})}}" class="btn btn-outline-danger" title="desactivated"> - Désactiver</a>&nbsp;
+                            <a href="{{path('admin_desactiverParticipant', {'id': participant.id})}}" class="btn btn-outline-success" title="actived"> + Activer</a>&nbsp;
+                    </p><hr>
+                </div>
+
+            {% endfor %}
+            </div>
+        </div>
     </section>
 
 
