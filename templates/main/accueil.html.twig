@@ -8,7 +8,7 @@
         <h4>Participant : {{ app.user.prenom | capitalize }} {{ app.user.nom | slice(0,1) | capitalize}}. {% if app.user.administrateur == 1 %}(admin){% endif %}</h4>
     </div>
 
-    <section>
+    <section >
                  <div class="mr-5 ml-5 w-60">
                     <form action="{{ path('main_filtre') }}" method="post" name="filtre" >
                         <fieldset>
@@ -125,6 +125,7 @@
                                                                                                                     font-size: 1.5em"
                 >P</button>
                 <div class="dropdown-menu dropdown-menu-lg-right " aria-labelledby="deroulantP" >
+                    <h5 class="text-center">Participants</h5>
                     <hr>
                 {% for participant in participants %}
                     <div class="dropright-item">
