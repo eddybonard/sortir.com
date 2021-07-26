@@ -8,8 +8,8 @@
         <h4>Participant : {{ app.user.prenom | capitalize }} {{ app.user.nom | slice(0,1) | capitalize}}. {% if app.user.administrateur == 1 %}(admin){% endif %}</h4>
     </div>
 
-    <section >
-                 <div class="mr-5 ml-5 w-60">
+    <section  >
+                 <div class=" w-60">
                     <form action="{{ path('main_filtre') }}" method="post" name="filtre" >
                         <fieldset>
                             <legend>Filtrer les sorties</legend>
@@ -71,7 +71,7 @@
                                 {% else %}
                                     <div class="col-lg-3 mt-3 mb-3">
                                         <div class="card ">
-                                            <img height="250" src="{{ asset('uploadImage/' ~ sortie.photo) }}" alt="description">
+                                            <img class="imageCard" height="250" src="{{ asset('uploadImage/' ~ sortie.photo) }}" alt="description">
                                             <div class="card-body">
                                                 <div class="card-title"><h3>{{ sortie.nom }}</h3> </div>
                                                 <div class="card-text">
@@ -101,16 +101,18 @@
                             {% endfor %}
                             {% endif %}
                         </div>
+                        <br>
+                        <div class="container">
+                            <div class="row align-items-center">
+                                <div class="col-lg-12">
+                                    <div class="navigation  "  >
+                                        {{ knp_pagination_render(sorties) }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-        <div class="container">
-            <div class="row align-items-center">
-                <div class="col-lg-12">
-                    <div class="navigation  "  >
-                        {{ knp_pagination_render(sorties) }}
-                    </div>
-                </div>
-            </div>
-        </div>
+
         {% if app.user.administrateur == 1 %}
             <div class="dropright">
                 <button class="btn btn dropdown-toggle" data-toggle="dropdown" type="button" id="deroulantP" style=" background-color: #7952b3;
@@ -146,9 +148,10 @@
                                 &nbsp;
                             {% else %}
                                 <a href="{{path('admin_activerParticipant', {'id': participant.id})}}" style="text-decoration:none"  title="actived">
-                                    <button style="border: none; background: none;" onclick="activerParticipant()" > <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" color="red" fill="currentColor" class="bi bi-toggle-on" viewBox="0 0 16 16">
-                                    <path d="M5 3a5 5 0 0 0 0 10h6a5 5 0 0 0 0-10H5zm6 9a4 4 0 1 1 0-8 4 4 0 0 1 0 8z"/>
-                                        </svg></button>
+                                    <button style="border: none; background: none;" onclick="activerParticipant()" > <svg xmlns="http://www.w3.org/2000/svg" color="red" width="20" height="20" fill="currentColor" class="bi bi-toggle-off" viewBox="0 0 16 16">
+                                            <path d="M11 4a4 4 0 0 1 0 8H8a4.992 4.992 0 0 0 2-4 4.992 4.992 0 0 0-2-4h3zm-6 8a4 4 0 1 1 0-8 4 4 0 0 1 0 8zM0 8a5 5 0 0 0 5 5h6a5 5 0 0 0 0-10H5a5 5 0 0 0-5 5z"/>
+                                        </svg>
+                                    </button>
                                 </a>
                                 &nbsp;{{ participant.pseudo }} / {{ participant.nom }} &nbsp;
                                 <a href="{{path('admin_suprimmerParticipant', {'id': participant.id})}}" style="text-decoration:none"  class="btn btn-outline-danger" onclick="suprimmerParticipant()"  title="suprimmer">
