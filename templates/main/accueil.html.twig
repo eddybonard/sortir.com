@@ -3,11 +3,16 @@
 {% block title %}{{ parent() }} - Accueil{% endblock %}
 
 {% block body %}
-    <div class="jumbotron text-right">
-        <h4>Date du jour : {{ 'now'| date('d/m/Y') }}</h4>
-        <h4>Participant : {{ app.user.prenom | capitalize }} {{ app.user.nom | slice(0,1) | capitalize}}. {% if app.user.administrateur == 1 %}(admin){% endif %}</h4>
-    </div>
-
+    {% if app.user.actif == 0 %}
+        <div class="alert alert-danger mt-3 mb-3 mr-3 ml-3 text-center">
+            <h1>Votre compte a été banni veuillez contacter l'administrateur </h1>
+        </div>
+    {% else %}
+        <div class="jumbotron text-right">
+            <h4>Date du jour : {{ 'now'| date('d/m/Y') }}</h4>
+            <h4>Participant : {{ app.user.prenom | capitalize }} {{ app.user.nom | slice(0,1) | capitalize}}. {% if app.user.administrateur == 1 %}(admin){% endif %}</h4>
+        </div>
+    {% endif %}
     <section  >
                  <div class=" w-60">
                     <form action="{{ path('main_filtre') }}" method="post" name="filtre" >
@@ -44,7 +49,6 @@
                                     <h3>Aucune sortie disponible au sein de ce campus</h3>
                                 </div>
                             {% else %}
-
                             {% for sortie in sorties %}
                                 {% if sortie.etat == etatAnnuler %}
                                     <div class="col-lg-3 mt-3 mb-3">
@@ -83,15 +87,19 @@
                                                             <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
                                                         </svg> : {#{{ sortie.etat  }}#}<br>
                                                         Organisateur : {#{{ sortie.organisateur }}#}</p>
-                                                    {% if app.user == sortie.organisateur %}
-                                                        <a href="{{ path('sortie_annulation', {'id': sortie.id}) }}" class="btn btn-outline-danger">Annuler</a>
-                                                        <a href="{{ path('sortie_affichage', {'id' : sortie.id}) }}" class="btn btn-primary">Afficher</a>
+                                                    {% if app.user.actif == 0 %}
+                                                        <div></div>
                                                     {% else %}
-                                                        {% if app.user.administrateur == 1 %}
+                                                        {% if app.user == sortie.organisateur %}
                                                             <a href="{{ path('sortie_annulation', {'id': sortie.id}) }}" class="btn btn-outline-danger">Annuler</a>
-                                                        {% endif %}
-                                                        <a href="{{ path('sortie_affichage', {'id' : sortie.id}) }}" class="btn btn-primary">Afficher</a>
-                                                    {% endif  %}
+                                                            <a href="{{ path('sortie_affichage', {'id' : sortie.id}) }}" class="btn btn-primary">Afficher</a>
+                                                        {% else %}
+                                                            {% if app.user.administrateur == 1 %}
+                                                                <a href="{{ path('sortie_annulation', {'id': sortie.id}) }}" class="btn btn-outline-danger">Annuler</a>
+                                                            {% endif %}
+                                                            <a href="{{ path('sortie_affichage', {'id' : sortie.id}) }}" class="btn btn-primary">Afficher</a>
+                                                        {% endif  %}
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                         </div>

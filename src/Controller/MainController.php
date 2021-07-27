@@ -38,13 +38,19 @@ class MainController extends AbstractController
                             CampusRepository $campusRepository,
                             Request $request,
                             EtatRepository $etatRepository,
-                            ParticipantRepository $participantRepository): Response
+                            ParticipantRepository $participantRepository
+                            ): Response
     {
         $sorties = $paginator->paginate(
             $sortieRepository->sortiePlusRecent(),
             $request->query->getInt('page',1),8
         );
 
+        /*$user = $this->getUser()->getId();*/
+
+        /*$participantSortie = $sortieRepository->find(1);
+
+        $participantSortie =  $participantSortie->getParticipants();*/
         $campus = $campusRepository->findall();
         $participants = $participantRepository->listeDesParticpantsConnecte();
         $etatAnnuler = $etatRepository->find(5);
@@ -53,7 +59,8 @@ class MainController extends AbstractController
             'sorties'=>$sorties,
             'campus' =>$campus,
             'etatAnnuler'=>$etatAnnuler,
-            'participants'=>$participants
+            'participants'=>$participants,
+           /* 'participantSortie' => $participantSortie,*/
 
 
 
@@ -148,7 +155,8 @@ class MainController extends AbstractController
                                      CampusRepository $campusRepository,
                                      SortieRepository $sortieRepository,
                                     PaginatorInterface $paginator,
-                                    EtatRepository $etatRepository)
+                                    EtatRepository $etatRepository,
+                                    ParticipantRepository $participantRepository)
     {
         $recherche = $request->request->get('campus');
         $etatAnnuler = $etatRepository->find(5);
@@ -157,11 +165,14 @@ class MainController extends AbstractController
             $sortieRepository->sortieTrieeParCampus($recherche),
             $request->query->getInt('page', 1),8
         );
+        $participants = $participantRepository->listeDesParticpantsConnecte();
 
-            return $this->render('main/accueil.html.twig', [
+
+        return $this->render('main/accueil.html.twig', [
                 'campus' => $campus,
                 'sorties' =>$sorties,
-                'etatAnnuler'=>$etatAnnuler
+                'etatAnnuler'=>$etatAnnuler,
+                'participants' => $participants
 
             ]);
 
