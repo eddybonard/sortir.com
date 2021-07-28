@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Controller\Services\Censurator;
 use App\Repository\SortieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -172,7 +173,8 @@ class Sortie
 
     public function setInfoSortie(?string $infoSortie): self
     {
-        $this->infoSortie = $infoSortie;
+        $censure = new Censurator();
+        $this->infoSortie = $censure->censure($infoSortie);
 
         return $this;
     }

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Controller\Services\Censurator;
 use App\Repository\LieuRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -68,7 +69,8 @@ class Lieu
 
     public function setNom(string $nom): self
     {
-        $this->nom = $nom;
+        $censure = new Censurator();
+        $this->nom = $censure->censure($nom);
 
         return $this;
     }
@@ -80,7 +82,8 @@ class Lieu
 
     public function setRue(string $rue): self
     {
-        $this->rue = $rue;
+        $censure = new Censurator();
+        $this->rue = $censure->censure($rue);
 
         return $this;
     }
