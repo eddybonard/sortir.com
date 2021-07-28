@@ -27,10 +27,11 @@
                     <div class="container">
                         <ul class="navbar-nav no-wrap me-auto mb-2 mb-lg-0">
                             <li class="nav-item">
-                                <a class=" nav-link active " style="white-space: nowrap; " href="{{ path('main_accueil') }}"  title="Accueil"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-house-door" viewBox="0 0 16 16">
+                                <a class=" nav-link  " style="white-space: nowrap; font-size: 1.4em; " href="{{ path('main_accueil') }}"  title="Accueil"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-house-door" viewBox="0 0 16 16">
                                         <path d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4.5a.5.5 0 0 0 .5-.5v-4h2v4a.5.5 0 0 0 .5.5H14a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146zM2.5 14V7.707l5.5-5.5 5.5 5.5V14H10v-4a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v4H2.5z"/>
                                     </svg>&nbsp;Accueil</a>
                             </li>
+                            &nbsp;
                             {% if app.user.actif == 0 %}
                                 <button class="btn btn-outline-danger dropdown-toggle" style="border-color: red;color: red; " type="button" id="deroulantb" data-toggle="dropdown" >
                                     Banni
@@ -38,8 +39,8 @@
                             {% else %}
                                 <li class="nav-item">
                                     <div class="dropdown">
-                                        <button class="btn btn-outline dropdown-toggle" style="border-color: #7952b3;color: #7952b3; " type="button" id="deroulantb" data-toggle="dropdown" >
-                                            Profil
+                                        <button class="btn btn-outline dropdown-toggle" style="border-color: #7952b3;color: white; font-size: 1.3em; " type="button" id="deroulantb" data-toggle="dropdown" >
+                                            Bonjour, {{ app.user.pseudo }}
                                         </button>
                                         <div class="dropdown-menu dropdown-menu-lg-right " aria-labelledby="deroulantb" >
                                             <a class=" dropdown-item   " href="{{ path('sortie_creation') }}" title="Sortie"><svg color="green" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
@@ -63,6 +64,13 @@
                                                 </svg>&nbsp;
                                                 Modifier mon profil
                                             </a>
+                                            <hr>
+                                            <a class=" dropdown-item " href="{{ path('app_logout') }}" title="Se Deconnecter">
+                                                <svg xmlns="http://www.w3.org/2000/svg" color="red" width="20" height="20" fill="currentColor" class="bi bi-toggle-off" viewBox="0 0 16 16">
+                                                    <path d="M11 4a4 4 0 0 1 0 8H8a4.992 4.992 0 0 0 2-4 4.992 4.992 0 0 0-2-4h3zm-6 8a4 4 0 1 1 0-8 4 4 0 0 1 0 8zM0 8a5 5 0 0 0 5 5h6a5 5 0 0 0 0-10H5a5 5 0 0 0-5 5z"/>
+                                                </svg>
+                                                Se Deconnecter
+                                            </a>
                                         </div>
                                     </div>
                                 </li>
@@ -70,7 +78,7 @@
                                 {% if is_granted('ROLE_ADMIN') %}
                                     <li class="nav-item">
                                         <div class="dropdown">
-                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="deroulantb" data-toggle="dropdown" >
+                                            <button class="btn btn-secondary dropdown-toggle" style="font-size: 1.3em;" type="button" id="deroulantb" data-toggle="dropdown" >
                                                 Admin
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-lg-right " aria-labelledby="deroulantb" >
@@ -90,10 +98,6 @@
                                     </li>
                                     {% endif %}
                             {% endif %}
-
-                            <li class="nav-item" style="white-space: nowrap">
-                                <a class=" nav-link " href="{{ path('app_logout') }}" title="Se Deconnecter">Se Deconnecter</a>
-                            </li>
                         </ul>
                     </div>
                 </div>
