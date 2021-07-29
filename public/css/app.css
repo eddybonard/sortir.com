@@ -1,8 +1,21 @@
+.boutonFacebook:hover{
+    background-color: #125699;
+    border-color: #125699;
+}
+.boutonFacebook{
+    border-color: #125699;
+    color: #125699;
+}
+
+
 @media (max-width: 1000px) {
     .card {
         width : 250px;
     }
-
+    .logoAgrandis
+    {
+        display:none;
+    }
 
 
 }

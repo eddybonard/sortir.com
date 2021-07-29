@@ -46,20 +46,21 @@ class MainController extends AbstractController
             $request->query->getInt('page',1),8
         );
 
-        /*$user = $this->getUser()->getId();*/
-
-        /*$participantSortie = $sortieRepository->find(1);
-
-        $participantSortie =  $participantSortie->getParticipants();*/
+        $etatEncours = $etatRepository->find(1);
+        $etatFermee = $etatRepository->find(2);
         $campus = $campusRepository->findall();
         $participants = $participantRepository->listeDesParticpantsConnecte();
         $etatAnnuler = $etatRepository->find(5);
+        $dateNow = new \DateTime();
 
         return $this->render('main/accueil.html.twig', [
             'sorties'=>$sorties,
             'campus' =>$campus,
             'etatAnnuler'=>$etatAnnuler,
             'participants'=>$participants,
+           'dateNow' => $dateNow,
+           'etatEncours' =>$etatEncours,
+           'etatFermee' =>$etatFermee
            /* 'participantSortie' => $participantSortie,*/
 
 
@@ -165,6 +166,7 @@ class MainController extends AbstractController
             $sortieRepository->sortieTrieeParCampus($recherche),
             $request->query->getInt('page', 1),8
         );
+        dump($sorties);
         $participants = $participantRepository->listeDesParticpantsConnecte();
 
 

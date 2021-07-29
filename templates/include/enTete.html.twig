@@ -36,11 +36,15 @@
                                 <button class="btn btn-outline-danger dropdown-toggle" style="border-color: red;color: red; " type="button" id="deroulantb" data-toggle="dropdown" >
                                     Banni
                                 </button>
+                                <a class=" nav-link " style="white-space: nowrap; font-size: 1.3em"href="{{ path('app_logout') }}" title="Se Deconnecter">
+                                    Se Deconnecter
+                                </a>
                             {% else %}
                                 <li class="nav-item">
                                     <div class="dropdown">
                                         <button class="btn btn-outline dropdown-toggle" style="border-color: #7952b3;color: white; font-size: 1.3em; " type="button" id="deroulantb" data-toggle="dropdown" >
                                             Bonjour, {{ app.user.pseudo }}
+                                            <img width="60" height="40" src="{{ asset('uploadImage/'~app.user.photo) }}" alt="photo de profil">
                                         </button>
                                         <div class="dropdown-menu dropdown-menu-lg-right " aria-labelledby="deroulantb" >
                                             <a class=" dropdown-item   " href="{{ path('sortie_creation') }}" title="Sortie"><svg color="green" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-square" viewBox="0 0 16 16">
@@ -69,7 +73,7 @@
                                                 <svg xmlns="http://www.w3.org/2000/svg" color="red" width="20" height="20" fill="currentColor" class="bi bi-toggle-off" viewBox="0 0 16 16">
                                                     <path d="M11 4a4 4 0 0 1 0 8H8a4.992 4.992 0 0 0 2-4 4.992 4.992 0 0 0-2-4h3zm-6 8a4 4 0 1 1 0-8 4 4 0 0 1 0 8zM0 8a5 5 0 0 0 5 5h6a5 5 0 0 0 0-10H5a5 5 0 0 0-5 5z"/>
                                                 </svg>
-                                                Se Deconnecter
+                                                &nbsp;Se Deconnecter
                                             </a>
                                         </div>
                                     </div>

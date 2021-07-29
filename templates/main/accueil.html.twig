@@ -44,7 +44,7 @@
                 </div>
                     <div class="container">
                         <div class="row">
-                            {% if sorties == null %}
+                            {% if sorties.count == null %}
                                 <div class="col-lg-12 mt-3 mb-3 text-center text-muted ">
                                     <h3>Aucune sortie disponible au sein de ce campus</h3>
                                 </div>
@@ -52,19 +52,20 @@
                             {% for sortie in sorties %}
                                 {% if sortie.etat == etatAnnuler %}
                                     <div class="col-lg-3 mt-3 mb-3">
-                                        <div class="card " >
-                                            <img style="opacity: 0.2; " height="250" src="{{ asset('uploadImage/' ~ sortie.photo) }}" alt="description">
+                                        <div class="card " style="border-radius: 20px;">
+                                            <img style="opacity: 0.2; border-radius: 20px; " height="250" src="{{ asset('uploadImage/' ~ sortie.photo) }}" alt="description">
                                             <div class="card-body">
                                                 <div class="card-title"><h3>{{ sortie.nom }}</h3> </div>
                                                 <div class="card-text">
                                                     <p>Date de début : {{ sortie.dateHeureDebut | date('d/m/Y') }}<br>
                                                         Clôture :  {{ sortie.dateLimiteInscription | date('d/m/Y') }}<br>
-                                                        Places : /{{ sortie.nbInscriptionMax }}<br>
+                                                        Places : 0 /{{ sortie.nbInscriptionMax }}<br>
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
                                                             <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                                                             <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
-                                                        </svg> : {#{{ sortie.etat  }}#}<br>
-                                                        Organisateur : {#{{ sortie.organisateur }}#}</p>
+                                                        </svg> :
+                                                        {{ sortie.etat.libelle  }}<br>
+                                                        Organisateur : {{ sortie.organisateur.campus.nom }}</p>
                                                     <div>
                                                         <h4 class="text-center" style="color: red;">Annulée!!!</h4>
                                                     </div>
@@ -74,19 +75,20 @@
                                     </div>
                                 {% else %}
                                     <div class="col-lg-3 mt-3 mb-3">
-                                        <div class="card ">
-                                            <img class="imageCard" height="250" src="{{ asset('uploadImage/' ~ sortie.photo) }}" alt="description">
+                                        <div class="card"  style="border-radius: 20px;">
+                                            <img class="imageCard" style="border-radius: 20px;" height="250" src="{{ asset('uploadImage/' ~ sortie.photo) }}" alt="description">
                                             <div class="card-body">
                                                 <div class="card-title"><h3>{{ sortie.nom }}</h3> </div>
                                                 <div class="card-text">
                                                     <p>Date de début : {{ sortie.dateHeureDebut | date('d/m/Y') }}<br>
                                                         Clôture :  {{ sortie.dateLimiteInscription | date('d/m/Y') }}<br>
-                                                        Places : /{{ sortie.nbInscriptionMax }}<br>
+                                                        Places : 0/{{ sortie.nbInscriptionMax }}<br>
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
                                                             <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
                                                             <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
-                                                        </svg> : {#{{ sortie.etat  }}#}<br>
-                                                        Organisateur : {#{{ sortie.organisateur }}#}</p>
+                                                        </svg> :
+                                                        {{ sortie.etat.libelle  }}<br>
+                                                        Organisateur : {{ sortie.organisateur.campus.nom }}</p>
                                                     {% if app.user.actif == 0 %}
                                                         <div></div>
                                                     {% else %}
@@ -127,7 +129,7 @@
                                                                                                                     color:white;
                                                                                                                     position: fixed;
                                                                                                                     left: 0px;
-                                                                                                                    top: 300px;
+                                                                                                                    top: 250px;
                                                                                                                     margin-left: 10px;
                                                                                                                      clip-path: circle();
                                                                                                                      width : 60px;
