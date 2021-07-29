@@ -60,7 +60,21 @@ class SortieRepository extends ServiceEntityRepository
     public function sortieTrieeParCampus($value): array
     {
         return $this->createQueryBuilder('s')
+            ->andWhere('s.campusOrganisateur = :value ')
+            ->setParameter('value', $value)
+            ->addOrderBy('s.dateHeureDebut')
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+    public function sortieTrieeParCampusetDate($value, $dateDebut, $dateFin): array
+    {
+        return $this->createQueryBuilder('s')
+            ->andWhere('s.dateHeureDebut BETWEEN :dateDebut AND :dateFin')
             ->andWhere('s.campusOrganisateur = :value')
+            ->setParameter('dateDebut',$dateDebut)
+            ->setParameter('dateFin',$dateFin)
             ->setParameter('value', $value)
             ->addOrderBy('s.dateHeureDebut')
             ->getQuery()

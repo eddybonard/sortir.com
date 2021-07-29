@@ -160,15 +160,37 @@ class MainController extends AbstractController
                                     ParticipantRepository $participantRepository)
     {
         $recherche = $request->request->get('campus');
+        $dateDebut = $request->request->get('debut');
+        $dateFin = $request->request->get('fin');
+
+        if ($dateDebut != null)
+        {
+            $etatAnnuler = $etatRepository->find(5);
+            $campus = $campusRepository->findAll();
+            $sorties = $paginator->paginate(
+                $sortieRepository->sortieTrieeParCampusetDate($recherche, $dateDebut, $dateFin),
+                $request->query->getInt('page', 1),8
+            );
+
+            $participants = $participantRepository->listeDesParticpantsConnecte();
+
+            return $this->render('main/accueil.html.twig', [
+                'campus' => $campus,
+                'sorties' =>$sorties,
+                'etatAnnuler'=>$etatAnnuler,
+                'participants' => $participants
+
+            ]);
+        }
+
         $etatAnnuler = $etatRepository->find(5);
         $campus = $campusRepository->findAll();
         $sorties = $paginator->paginate(
             $sortieRepository->sortieTrieeParCampus($recherche),
             $request->query->getInt('page', 1),8
         );
-        dump($sorties);
-        $participants = $participantRepository->listeDesParticpantsConnecte();
 
+        $participants = $participantRepository->listeDesParticpantsConnecte();
 
         return $this->render('main/accueil.html.twig', [
                 'campus' => $campus,

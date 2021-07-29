@@ -8,13 +8,13 @@
             <h1>Votre compte a été banni veuillez contacter l'administrateur </h1>
         </div>
     {% else %}
-        <div class="jumbotron text-right">
+        <div class="jumbotron text-right ">
             <h4>Date du jour : {{ 'now'| date('d/m/Y') }}</h4>
             <h4>Participant : {{ app.user.prenom | capitalize }} {{ app.user.nom | slice(0,1) | capitalize}}. {% if app.user.administrateur == 1 %}(admin){% endif %}</h4>
         </div>
     {% endif %}
     <section  >
-                 <div class=" w-60">
+                 <div class=" w-50">
                     <form action="{{ path('main_filtre') }}" method="post" name="filtre" >
                         <fieldset>
                             <legend>Filtrer les sorties</legend>
