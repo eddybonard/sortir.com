@@ -122,7 +122,6 @@
                             </div>
                         </div>
                     </div>
-
         {% if app.user.administrateur == 1 %}
             <div class="dropright menuParticipant ">
                 <button class="btn btn dropdown-toggle" data-toggle="dropdown" type="button" id="deroulantP" style=" background-color: #7952b3;
@@ -180,6 +179,32 @@
                 </div>
             </div>
         {% endif %}
+        <div class="dropup menuParticipant ">
+            <button class="btn btn dropdown-toggle" data-toggle="dropdown" type="button" id="deroulantP" style=" background-color: #7952b3;
+                                                                                                                    color:white;
+                                                                                                                    position: fixed;
+                                                                                                                    right: 0px;
+                                                                                                                    bottom: 100px;
+                                                                                                                    margin-left: 10px;
+                                                                                                                     clip-path: circle();
+                                                                                                                     width : 60px;
+                                                                                                                    height :60px;
+                                                                                                        "
+            ><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-chat-right" viewBox="0 0 16 16">
+                    <path d="M2 1a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h9.586a2 2 0 0 1 1.414.586l2 2V2a1 1 0 0 0-1-1H2zm12-1a2 2 0 0 1 2 2v12.793a.5.5 0 0 1-.854.353l-2.853-2.853a1 1 0 0 0-.707-.293H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12z"/>
+                </svg></button>
+            <div class="dropdown-menu dropdown-menu-lg-right " aria-labelledby="deroulantP" >
+                <h5 class="text-center">Tchat </h5>
+                <hr>
+                <div style="height: 300px; overflow-y: scroll;">
+
+                </div>
+                <div class="mt-3 pr-2 pl-2">
+                    <input type="text" class="form-control" name="question" id="question" placeholder="Une question ? "><br>
+                    <button class="btn btn-secondary">Envoyer</button>
+                </div>
+            </div>
+        </div>
     </section>
 
 

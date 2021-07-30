@@ -60,7 +60,7 @@ class MainController extends AbstractController
             'participants'=>$participants,
            'dateNow' => $dateNow,
            'etatEncours' =>$etatEncours,
-           'etatFermee' =>$etatFermee
+           'etatFermee' =>$etatFermee,
            /* 'participantSortie' => $participantSortie,*/
 
 

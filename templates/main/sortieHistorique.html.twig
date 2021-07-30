@@ -47,9 +47,9 @@
                                 <div class="card-text">
                                     <p>Date de début : {{ sortie.dateHeureDebut | date('d/m/Y') }}<br>
                                         Clôture :  {{ sortie.dateLimiteInscription | date('d/m/Y') }}<br>
-                                        Places : /{{ sortie.nbInscriptionMax }}<br>
-                                        Etat : {#{{ sortie.etat  }}#}<br>
-                                        Organisateur : {#{{ sortie.organisateur }}#}</p>
+                                        Places : 0 /{{ sortie.nbInscriptionMax }}<br>
+                                        Etat : {{ sortie.etat.libelle  }}<br>
+                                        Organisateur : {{ sortie.organisateur.campus.nom }}</p>
                                     <a href="{{ path('sortie_modifier', {'id':sortie.id}) }}" class="btn btn-outline-warning">Modifier</a>
                                     <a href="{{ path('sortie_affichage', {'id': sortie.id}) }}" class="btn btn-primary">Afficher</a>
                                 </div>

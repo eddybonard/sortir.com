@@ -46,8 +46,8 @@
 
                     <div class="mt-2 mb-2 text-center">
                         <button type="submit" class="btn btn-outline-success " >Modifier la sortie</button>
-                        <a href="{{ path('sortie_suprimmer', {'id':sortie.id}) }}"  class="btn btn-danger" onclick="suprimmerSortie()">Suprimmer la sortie</a>
-                        <a href="{{ path('sortie_historique', {'id': app.user.id}) }}" class="btn btn-danger"  >Annuler</a>
+                        <a href="{{ path('sortie_suprimmer', {'id':sortie.id}) }}"  class="btn btn-danger mt-2" onclick="suprimmerSortie()">Suprimmer la sortie</a>
+                        <a href="{{ path('sortie_historique', {'id': app.user.id}) }}" class="btn btn-danger mt-2"  >Annuler</a>
                     </div>
                     <input type="hidden" name="_csrf_token"
                            value="{{ csrf_token('authenticate') }}">
@@ -57,7 +57,7 @@
             <hr>
             <div class="col-lg-6 mb-2">
                 <div class="w-50 text-center" id="formulairelieu" style="display: none;">
-                    <h1>Ajouter un lieu</h1>
+                    <h4>Ajouter un lieu</h4>
                     {% form_theme formLieu 'bootstrap_4_layout.html.twig' %}
                     {{ form_start(formLieu) }}
 
