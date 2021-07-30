@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use App\Entity\Participant;
 
+use App\Entity\Tchat;
 use App\Form\ModifProfilType;
 
 use App\Repository\CampusRepository;
@@ -13,6 +14,7 @@ use App\Repository\EtatRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
 
+use App\Repository\TchatRepository;
 use App\Security\AppAuthentificationAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
@@ -38,7 +40,8 @@ class MainController extends AbstractController
                             CampusRepository $campusRepository,
                             Request $request,
                             EtatRepository $etatRepository,
-                            ParticipantRepository $participantRepository
+                            ParticipantRepository $participantRepository,
+                            TchatRepository $tchatRepository
                             ): Response
     {
         $sorties = $paginator->paginate(
@@ -46,21 +49,21 @@ class MainController extends AbstractController
             $request->query->getInt('page',1),8
         );
 
-        $etatEncours = $etatRepository->find(1);
-        $etatFermee = $etatRepository->find(2);
+
         $campus = $campusRepository->findall();
         $participants = $participantRepository->listeDesParticpantsConnecte();
         $etatAnnuler = $etatRepository->find(5);
-        $dateNow = new \DateTime();
+
+        $admin = $participantRepository->find(1);
+        $questionsTchat = $tchatRepository->findAll();
 
         return $this->render('main/accueil.html.twig', [
             'sorties'=>$sorties,
             'campus' =>$campus,
             'etatAnnuler'=>$etatAnnuler,
             'participants'=>$participants,
-           'dateNow' => $dateNow,
-           'etatEncours' =>$etatEncours,
-           'etatFermee' =>$etatFermee,
+           'questionsTchat'=>$questionsTchat,
+           'admin'=>$admin,
            /* 'participantSortie' => $participantSortie,*/
 
 
@@ -202,6 +205,24 @@ class MainController extends AbstractController
 
 
 
+    }
+
+    /**
+     * @Route("/accueil/tchat", name="main_tchat")
+     */
+    public function ajouterUneQuestionAuTchat(Request $request, EntityManagerInterface $entityManager)
+    {
+        $question = $request->request->get('question');
+        $user = $this->getUser();
+
+        $questionTchat = new Tchat();
+        $questionTchat->setQuestion($question);
+        $questionTchat->setParticipant($user);
+
+        $entityManager->persist($questionTchat);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('main_accueil');
     }
 
 

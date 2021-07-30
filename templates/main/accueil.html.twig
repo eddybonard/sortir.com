@@ -195,13 +195,18 @@
                 </svg></button>
             <div class="dropdown-menu dropdown-menu-lg-right " aria-labelledby="deroulantP" >
                 <h5 class="text-center">Tchat </h5>
+                <h6>Admin : <i style="color:red">{{ admin.pseudo}}</i> </h6>
                 <hr>
-                <div style="height: 300px; overflow-y: scroll;">
-
+                <div style="height: 300px; overflow-y: scroll;" id="zoneDeTchat">
+                    {% for question in questionsTchat %}
+                        <p><i>{{ question.participant.pseudo }}</i> : {{ question.question }}</p>
+                    {% endfor %}
                 </div>
                 <div class="mt-3 pr-2 pl-2">
-                    <input type="text" class="form-control" name="question" id="question" placeholder="Une question ? "><br>
-                    <button class="btn btn-secondary">Envoyer</button>
+                    <form  method="post" action="{{ path('main_tchat') }}">
+                        <label for="question">Question : </label><input type="text" class="form-control" name="question" id="question" placeholder="Une question ? "><br>
+                        <button class="btn btn-secondary" type="submit">Envoyer</button>
+                    </form>
                 </div>
             </div>
         </div>

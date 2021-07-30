@@ -99,10 +99,16 @@ class Participant implements UserInterface
      */
     private $photo;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Tchat::class, mappedBy="participant")
+     */
+    private $questionsTchat;
+
     public function __construct()
     {
         $this->organisateurSorties = new ArrayCollection();
         $this->participantSorties = new ArrayCollection();
+        $this->questionsTchat = new ArrayCollection();
     }
 
 
@@ -334,6 +340,36 @@ class Participant implements UserInterface
     public function setPhoto(?string $photo): self
     {
         $this->photo = $photo;
+
+        return $this;
+    }
+
+    /**
+     * @return \Doctrine\Common\Collections\Collection|Tchat[]
+     */
+    public function getQuestionsTchat(): \Doctrine\Common\Collections\Collection
+    {
+        return $this->questionsTchat;
+    }
+
+    public function addQuestionsTchat(Tchat $questionsTchat): self
+    {
+        if (!$this->questionsTchat->contains($questionsTchat)) {
+            $this->questionsTchat[] = $questionsTchat;
+            $questionsTchat->setParticipant($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuestionsTchat(Tchat $questionsTchat): self
+    {
+        if ($this->questionsTchat->removeElement($questionsTchat)) {
+            // set the owning side to null (unless already changed)
+            if ($questionsTchat->getParticipant() === $this) {
+                $questionsTchat->setParticipant(null);
+            }
+        }
 
         return $this;
     }
