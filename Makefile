@@ -35,17 +35,12 @@ db-reset: ## Recreate database dev
 	$(EXEC) $(CONSOLE) --env=dev doctrine:database:drop --force --if-exists
 	$(EXEC) $(CONSOLE) --env=dev doctrine:database:create --if-not-exists
 	$(EXEC) $(CONSOLE) --env=dev doctrine:schema:create -n
-	$(EXEC) $(CONSOLE) --env=dev hautelook:fixtures:load -n --purge-with-truncate
 
 db-test: ## Recreate database test
 	@echo ----------------- RESET TEST DB ------------------
 	$(EXEC) $(CONSOLE) --env=test doctrine:database:drop --force --if-exists
 	$(EXEC) $(CONSOLE) --env=test doctrine:database:create --if-not-exists
 	$(EXEC) $(CONSOLE) --env=test doctrine:schema:create -n
-	$(EXEC) $(CONSOLE) doctrine:query:sql "INSERT INTO api_test.site (host, created_at, updated_at ) VALUES ('localhost', NOW(), NOW());"
-
-load-fixtures: ## Load database fixtures
-	$(EXEC) $(CONSOLE) hautelook:fixtures:load -n --purge-with-truncate
 
 ## —— Tools 🛠️️ ———————————————————————————————————————————————————————————————
 encode-password: ## Encore password
@@ -66,21 +61,6 @@ clean-tests: ## Clean output folder
 
 run-test-api: ## Run functional tests
 	@echo ----------------- launch api tests ------------------
-	$(EXEC) vendor/bin/codecept run api --group=auth --quiet
-	$(EXEC) vendor/bin/codecept run api --group=answers --quiet
-	$(EXEC) vendor/bin/codecept run api --group=cities --quiet
-	$(EXEC) vendor/bin/codecept run api --group=challenges --quiet
-	$(EXEC) vendor/bin/codecept run api --group=disciplines --quiet
-	$(EXEC) vendor/bin/codecept run api --group=exams --quiet
-	$(EXEC) vendor/bin/codecept run api --group=folders --quiet
-	$(EXEC) vendor/bin/codecept run api --group=items --quiet
-	$(EXEC) vendor/bin/codecept run api --group=media_objects --quiet
-	$(EXEC) vendor/bin/codecept run api --group=notions --quiet
-	$(EXEC) vendor/bin/codecept run api --group=questions --quiet
-	$(EXEC) vendor/bin/codecept run api --group=sections --quiet
-	$(EXEC) vendor/bin/codecept run api --group=universities --quiet
-	$(EXEC) vendor/bin/codecept run api --group=users --quiet
-	$(EXEC) vendor/bin/codecept run api --group=years --quiet
 
 run-test-unit: ## Run unit tests
 	@echo ----------------- launch unit tests ------------------
