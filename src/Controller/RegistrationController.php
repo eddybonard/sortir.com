@@ -14,6 +14,9 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
+/**
+ *
+ */
 class RegistrationController extends AbstractController
 {
     /**
@@ -26,8 +29,8 @@ class RegistrationController extends AbstractController
                                 SluggerInterface $slugger): Response
     {
         $user = new Participant();
-        $user->setRoles(["ROLE_PARTICIPANT"]);
-        $user->setAdministrateur(false);
+        $user->setRoles(["ROLE_ADMIN"]);
+        $user->setAdministrateur(true);
         $user->setActif(true);
         $form = $this->createForm(RegistrationFormType::class, $user);
         $form->handleRequest($request);

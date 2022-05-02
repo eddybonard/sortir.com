@@ -91,22 +91,35 @@ class Sortie
      */
     private $datePublication;
 
+    /**
+     *
+     */
     public function __construct()
     {
         $this->participants = new ArrayCollection();
     }
 
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getNom(): ?string
     {
         return $this->nom;
     }
 
+    /**
+     * @param string $nom
+     * @return $this
+     */
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
@@ -114,11 +127,18 @@ class Sortie
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getDateHeureDebut(): ?\DateTimeInterface
     {
         return $this->dateHeureDebut;
     }
 
+    /**
+     * @param \DateTimeInterface $dateHeureDebut
+     * @return $this
+     */
     public function setDateHeureDebut(\DateTimeInterface $dateHeureDebut): self
     {
         $this->dateHeureDebut = $dateHeureDebut;
@@ -126,11 +146,18 @@ class Sortie
         return $this;
     }
 
+    /**
+     * @return int|null
+     */
     public function getDuree(): ?int
     {
         return $this->duree;
     }
 
+    /**
+     * @param int $duree
+     * @return $this
+     */
     public function setDuree(int $duree): self
     {
         $this->duree = $duree;
@@ -138,11 +165,18 @@ class Sortie
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getDateLimiteInscription(): ?\DateTimeInterface
     {
         return $this->dateLimiteInscription;
     }
 
+    /**
+     * @param \DateTimeInterface $dateLimiteInscription
+     * @return $this
+     */
     public function setDateLimiteInscription(\DateTimeInterface $dateLimiteInscription): self
     {
         $this->dateLimiteInscription = $dateLimiteInscription;
@@ -150,11 +184,18 @@ class Sortie
         return $this;
     }
 
+    /**
+     * @return int|null
+     */
     public function getNbInscriptionMax(): ?int
     {
         return $this->nbInscriptionMax;
     }
 
+    /**
+     * @param int|null $nbInscriptionMax
+     * @return $this
+     */
     public function setNbInscriptionMax(?int $nbInscriptionMax): self
     {
         $this->nbInscriptionMax = $nbInscriptionMax;
@@ -162,11 +203,18 @@ class Sortie
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getInfoSortie(): ?string
     {
         return $this->infoSortie;
     }
 
+    /**
+     * @param string|null $infoSortie
+     * @return $this
+     */
     public function setInfoSortie(?string $infoSortie): self
     {
         $censure = new Censurator();
@@ -176,18 +224,18 @@ class Sortie
     }
 
 
-
-
-
-
-
-
-
+    /**
+     * @return Campus|null
+     */
     public function getCampusOrganisateur(): ?Campus
     {
         return $this->campusOrganisateur;
     }
 
+    /**
+     * @param Campus|null $campusOrganisateur
+     * @return $this
+     */
     public function setCampusOrganisateur(?Campus $campusOrganisateur): self
     {
         $this->campusOrganisateur = $campusOrganisateur;
@@ -195,11 +243,18 @@ class Sortie
         return $this;
     }
 
+    /**
+     * @return Etat|null
+     */
     public function getEtat(): ?Etat
     {
         return $this->etat;
     }
 
+    /**
+     * @param Etat|null $etat
+     * @return $this
+     */
     public function setEtat(?Etat $etat): self
     {
         $this->etat = $etat;
@@ -207,11 +262,18 @@ class Sortie
         return $this;
     }
 
+    /**
+     * @return Lieu|null
+     */
     public function getLieu(): ?Lieu
     {
         return $this->lieu;
     }
 
+    /**
+     * @param Lieu|null $lieu
+     * @return $this
+     */
     public function setLieu(?Lieu $lieu): self
     {
         $this->lieu = $lieu;
@@ -219,11 +281,18 @@ class Sortie
         return $this;
     }
 
+    /**
+     * @return Participant|null
+     */
     public function getOrganisateur(): ?Participant
     {
         return $this->organisateur;
     }
 
+    /**
+     * @param Participant|null $organisateur
+     * @return $this
+     */
     public function setOrganisateur(?Participant $organisateur): self
     {
         $this->organisateur = $organisateur;
@@ -239,6 +308,10 @@ class Sortie
         return $this->participants;
     }
 
+    /**
+     * @param Participant $participant
+     * @return $this
+     */
     public function addParticipant(Participant $participant): self
     {
         if (!$this->participants->contains($participant)) {
@@ -249,6 +322,10 @@ class Sortie
         return $this;
     }
 
+    /**
+     * @param Participant $participant
+     * @return $this
+     */
     public function removeParticipant(Participant $participant): self
     {
         if ($this->participants->removeElement($participant)) {
@@ -258,11 +335,18 @@ class Sortie
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getPhoto(): ?string
     {
         return $this->photo;
     }
 
+    /**
+     * @param string|null $photo
+     * @return $this
+     */
     public function setPhoto(?string $photo): self
     {
         $this->photo = $photo;
@@ -270,11 +354,18 @@ class Sortie
         return $this;
     }
 
+    /**
+     * @return \DateTimeInterface|null
+     */
     public function getDatePublication(): ?\DateTimeInterface
     {
         return $this->datePublication;
     }
 
+    /**
+     * @param \DateTimeInterface $datePublication
+     * @return $this
+     */
     public function setDatePublication(\DateTimeInterface $datePublication): self
     {
         $this->datePublication = $datePublication;

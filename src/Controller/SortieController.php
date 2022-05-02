@@ -2,21 +2,17 @@
 
 namespace App\Controller;
 
-
 use App\Entity\Etat;
 use App\Entity\Lieu;
-
 use App\Entity\Sortie;
 use App\Form\LieuType;
 use App\Form\SortieType;
 use App\Repository\CampusRepository;
-
 use App\Repository\EtatRepository;
 use App\Repository\LieuRepository;
 use App\Repository\SortieRepository;
 use App\Repository\VilleRepository;
 use Doctrine\ORM\EntityManagerInterface;
-
 use Knp\Component\Pager\PaginatorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,6 +22,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
+/**
+ *
+ */
 class SortieController extends AbstractController
 {
     /**
@@ -342,8 +341,6 @@ class SortieController extends AbstractController
             $this->addFlash('danger', 'Votre sortie bien été annulée');
             return $this->redirectToRoute('main_accueil');
         }
-
-
 
         return $this->render('main/sortieAnnulation.html.twig', [
             'sortie' =>$sortie,

@@ -104,6 +104,9 @@ class Participant implements UserInterface
      */
     private $questionsTchat;
 
+    /**
+     *
+     */
     public function __construct()
     {
         $this->organisateurSorties = new ArrayCollection();
@@ -112,17 +115,26 @@ class Participant implements UserInterface
     }
 
 
-
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getEmail(): ?string
     {
         return $this->email;
     }
 
+    /**
+     * @param string $email
+     * @return $this
+     */
     public function setEmail(string $email): self
     {
         $this->email = $email;
@@ -152,6 +164,10 @@ class Participant implements UserInterface
         return array_unique($roles);
     }
 
+    /**
+     * @param array $roles
+     * @return $this
+     */
     public function setRoles(array $roles): self
     {
         $this->roles = $roles;
@@ -167,6 +183,10 @@ class Participant implements UserInterface
         return $this->password;
     }
 
+    /**
+     * @param string $password
+     * @return $this
+     */
     public function setPassword(string $password): self
     {
         $this->password = $password;
@@ -194,11 +214,18 @@ class Participant implements UserInterface
         // $this->plainPassword = null;
     }
 
+    /**
+     * @return string|null
+     */
     public function getNom(): ?string
     {
         return $this->nom;
     }
 
+    /**
+     * @param string $nom
+     * @return $this
+     */
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
@@ -206,11 +233,18 @@ class Participant implements UserInterface
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getPrenom(): ?string
     {
         return $this->prenom;
     }
 
+    /**
+     * @param string $prenom
+     * @return $this
+     */
     public function setPrenom(string $prenom): self
     {
         $this->prenom = $prenom;
@@ -218,11 +252,18 @@ class Participant implements UserInterface
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getTelephone(): ?string
     {
         return $this->telephone;
     }
 
+    /**
+     * @param string $telephone
+     * @return $this
+     */
     public function setTelephone(string $telephone): self
     {
         $this->telephone = $telephone;
@@ -230,11 +271,18 @@ class Participant implements UserInterface
         return $this;
     }
 
+    /**
+     * @return bool|null
+     */
     public function getAdministrateur(): ?bool
     {
         return $this->administrateur;
     }
 
+    /**
+     * @param bool $administrateur
+     * @return $this
+     */
     public function setAdministrateur(bool $administrateur): self
     {
         $this->administrateur = $administrateur;
@@ -242,11 +290,18 @@ class Participant implements UserInterface
         return $this;
     }
 
+    /**
+     * @return bool|null
+     */
     public function getActif(): ?bool
     {
         return $this->actif;
     }
 
+    /**
+     * @param bool $actif
+     * @return $this
+     */
     public function setActif(bool $actif): self
     {
         $this->actif = $actif;
@@ -254,11 +309,18 @@ class Participant implements UserInterface
         return $this;
     }
 
+    /**
+     * @return Campus|null
+     */
     public function getCampus(): ?Campus
     {
         return $this->campus;
     }
 
+    /**
+     * @param Campus|null $campus
+     * @return $this
+     */
     public function setCampus(?Campus $campus): self
     {
         $this->campus = $campus;
@@ -274,6 +336,10 @@ class Participant implements UserInterface
         return $this->organisateurSorties;
     }
 
+    /**
+     * @param Sortie $organisateurSorty
+     * @return $this
+     */
     public function addOrganisateurSorty(Sortie $organisateurSorty): self
     {
         if (!$this->organisateurSorties->contains($organisateurSorty)) {
@@ -284,6 +350,10 @@ class Participant implements UserInterface
         return $this;
     }
 
+    /**
+     * @param Sortie $organisateurSorty
+     * @return $this
+     */
     public function removeOrganisateurSorty(Sortie $organisateurSorty): self
     {
         if ($this->organisateurSorties->removeElement($organisateurSorty)) {
@@ -304,6 +374,10 @@ class Participant implements UserInterface
         return $this->participantSorties;
     }
 
+    /**
+     * @param Sortie $participantSorty
+     * @return $this
+     */
     public function addParticipantSorty(Sortie $participantSorty): self
     {
         if (!$this->participantSorties->contains($participantSorty)) {
@@ -313,6 +387,10 @@ class Participant implements UserInterface
         return $this;
     }
 
+    /**
+     * @param Sortie $participantSorty
+     * @return $this
+     */
     public function removeParticipantSorty(Sortie $participantSorty): self
     {
         $this->participantSorties->removeElement($participantSorty);
@@ -320,11 +398,18 @@ class Participant implements UserInterface
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getPseudo(): ?string
     {
         return $this->pseudo;
     }
 
+    /**
+     * @param string $pseudo
+     * @return $this
+     */
     public function setPseudo(string $pseudo): self
     {
         $this->pseudo = $pseudo;
@@ -332,11 +417,18 @@ class Participant implements UserInterface
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getPhoto(): ?string
     {
         return $this->photo;
     }
 
+    /**
+     * @param string|null $photo
+     * @return $this
+     */
     public function setPhoto(?string $photo): self
     {
         $this->photo = $photo;
@@ -352,6 +444,10 @@ class Participant implements UserInterface
         return $this->questionsTchat;
     }
 
+    /**
+     * @param Tchat $questionsTchat
+     * @return $this
+     */
     public function addQuestionsTchat(Tchat $questionsTchat): self
     {
         if (!$this->questionsTchat->contains($questionsTchat)) {
@@ -362,6 +458,10 @@ class Participant implements UserInterface
         return $this;
     }
 
+    /**
+     * @param Tchat $questionsTchat
+     * @return $this
+     */
     public function removeQuestionsTchat(Tchat $questionsTchat): self
     {
         if ($this->questionsTchat->removeElement($questionsTchat)) {

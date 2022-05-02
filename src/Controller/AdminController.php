@@ -32,8 +32,6 @@ class AdminController extends AbstractController
             ]);
         }
 
-
-
         $ville = new Ville();
         $nom = $request->request->get('nom');
         $codePOstal = $request->request->get('codePostal');

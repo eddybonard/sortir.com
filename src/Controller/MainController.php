@@ -2,18 +2,13 @@
 
 namespace App\Controller;
 
-
 use App\Entity\Participant;
-
 use App\Entity\Tchat;
 use App\Form\ModifProfilType;
-
 use App\Repository\CampusRepository;
-
 use App\Repository\EtatRepository;
 use App\Repository\ParticipantRepository;
 use App\Repository\SortieRepository;
-
 use App\Repository\TchatRepository;
 use App\Security\AppAuthentificationAuthenticator;
 use Doctrine\ORM\EntityManagerInterface;
@@ -30,6 +25,9 @@ use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
+/**
+ *
+ */
 class MainController extends AbstractController
 {
     /**
@@ -202,9 +200,6 @@ class MainController extends AbstractController
                 'participants' => $participants
 
             ]);
-
-
-
     }
 
     /**
@@ -224,15 +219,5 @@ class MainController extends AbstractController
             $entityManager->flush();
 
             return $this->redirectToRoute('main_accueil');
-
-
     }
-
-
-
-
-
-
-
-
 }

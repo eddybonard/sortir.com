@@ -34,21 +34,34 @@ class Ville
      */
     private $lieus;
 
+    /**
+     *
+     */
     public function __construct()
     {
         $this->lieus = new ArrayCollection();
     }
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getNom(): ?string
     {
         return $this->nom;
     }
 
+    /**
+     * @param string $nom
+     * @return $this
+     */
     public function setNom(string $nom): self
     {
         $this->nom = $nom;
@@ -56,11 +69,18 @@ class Ville
         return $this;
     }
 
+    /**
+     * @return string|null
+     */
     public function getCodePostal(): ?string
     {
         return $this->codePostal;
     }
 
+    /**
+     * @param string $codePostal
+     * @return $this
+     */
     public function setCodePostal(string $codePostal): self
     {
         $this->codePostal = $codePostal;
@@ -76,6 +96,10 @@ class Ville
         return $this->lieus;
     }
 
+    /**
+     * @param Lieu $lieu
+     * @return $this
+     */
     public function addLieu(Lieu $lieu): self
     {
         if (!$this->lieus->contains($lieu)) {
@@ -86,6 +110,10 @@ class Ville
         return $this;
     }
 
+    /**
+     * @param Lieu $lieu
+     * @return $this
+     */
     public function removeLieu(Lieu $lieu): self
     {
         if ($this->lieus->removeElement($lieu)) {

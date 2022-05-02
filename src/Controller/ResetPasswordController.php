@@ -25,8 +25,14 @@ class ResetPasswordController extends AbstractController
 {
     use ResetPasswordControllerTrait;
 
+    /**
+     * @var ResetPasswordHelperInterface
+     */
     private $resetPasswordHelper;
 
+    /**
+     * @param ResetPasswordHelperInterface $resetPasswordHelper
+     */
     public function __construct(ResetPasswordHelperInterface $resetPasswordHelper)
     {
         $this->resetPasswordHelper = $resetPasswordHelper;
@@ -131,6 +137,12 @@ class ResetPasswordController extends AbstractController
         ]);
     }
 
+    /**
+     * @param string $emailFormData
+     * @param MailerInterface $mailer
+     * @return RedirectResponse
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     */
     private function processSendingPasswordResetEmail(string $emailFormData, MailerInterface $mailer): RedirectResponse
     {
         $user = $this->getDoctrine()->getRepository(Participant::class)->findOneBy([

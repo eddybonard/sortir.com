@@ -29,16 +29,26 @@ class Tchat
      */
     private $participant;
 
+    /**
+     * @return int|null
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @return string|null
+     */
     public function getQuestion(): ?string
     {
         return $this->question;
     }
 
+    /**
+     * @param string $question
+     * @return $this
+     */
     public function setQuestion(string $question): self
     {
         $censure = new Censurator();
@@ -47,11 +57,18 @@ class Tchat
         return $this;
     }
 
+    /**
+     * @return Participant|null
+     */
     public function getParticipant(): ?Participant
     {
         return $this->participant;
     }
 
+    /**
+     * @param Participant|null $participant
+     * @return $this
+     */
     public function setParticipant(?Participant $participant): self
     {
         $this->participant = $participant;
