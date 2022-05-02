@@ -138,7 +138,7 @@
                 <div class="dropdown-menu dropdown-menu-lg-right " aria-labelledby="deroulantP" >
                     <h5 class="text-center">Participants</h5>
                     <hr>
-                <div style="height: 300px; overflow-y: scroll;" >
+                <div style="height: 150px; overflow-y: scroll;" >
                     {% for participant in participants %}
                         <div class="dropright-item">
                             <p>&nbsp;
@@ -195,17 +195,23 @@
                 </svg></button>
             <div class="dropdown-menu dropdown-menu-lg-right " aria-labelledby="deroulantP" >
                 <h5 class="text-center">Tchat </h5>
-                <h6>Admin : <i style="color:red">{{ admin.pseudo}}</i> </h6>
                 <hr>
-                <div style="height: 300px; overflow-y: scroll;" id="zoneDeTchat">
+                <div style="height: 150px; width: 300px;  overflow-y: scroll;" id="zoneDeTchat">
                     {% for question in questionsTchat %}
-                        <p><i>{{ question.participant.pseudo }}</i> : {{ question.question }}</p>
+                        {% if question.participant.id == 1 %}
+                            <p>{{ question.participant.pseudo | upper }} <i style="color:red">(admin)</i>   : {{ question.question }}</p>
+                        {% elseif question.participant.pseudo == app.user.pseudo %}
+                            <p>MOI : {{ question.question }}</p>
+                        {% else %}
+                            <p>{{ question.participant.pseudo | upper }}   : {{ question.question }}</p>
+                        {% endif %}
                     {% endfor %}
                 </div>
+                <hr>
                 <div class="mt-3 pr-2 pl-2">
                     <form  method="post" action="{{ path('main_tchat') }}">
-                        <label for="question">Question : </label><input type="text" class="form-control" name="question" id="question" placeholder="Une question ? "><br>
-                        <button class="btn btn-secondary" type="submit">Envoyer</button>
+                        <label for="question">Question : </label><input type="text" class="form-control" required name="question" id="question" placeholder="Une question ? "><br>
+                        <button class="btn btn-outline" style="color:#7952b3; border-color:#7952b3" type="submit">Envoyer</button>
                     </form>
                 </div>
             </div>

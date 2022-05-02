@@ -53,10 +53,6 @@ class Sortie
      */
     private $infoSortie;
 
-
-
-
-
     /**
      * @ORM\ManyToOne(targetEntity=Campus::class, inversedBy="sorties")
      * @ORM\JoinColumn(nullable=false)

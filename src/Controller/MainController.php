@@ -215,14 +215,17 @@ class MainController extends AbstractController
         $question = $request->request->get('question');
         $user = $this->getUser();
 
-        $questionTchat = new Tchat();
-        $questionTchat->setQuestion($question);
-        $questionTchat->setParticipant($user);
 
-        $entityManager->persist($questionTchat);
-        $entityManager->flush();
+            $questionTchat = new Tchat();
+            $questionTchat->setQuestion($question);
+            $questionTchat->setParticipant($user);
 
-        return $this->redirectToRoute('main_accueil');
+            $entityManager->persist($questionTchat);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('main_accueil');
+
+
     }
 
 

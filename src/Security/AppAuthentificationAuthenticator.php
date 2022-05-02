@@ -98,7 +98,6 @@ class AppAuthentificationAuthenticator extends AbstractFormLoginAuthenticator im
             return new RedirectResponse($targetPath);
         }
 
-
        return new RedirectResponse($this->urlGenerator->generate('main_accueil'));
 
     }
