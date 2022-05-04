@@ -84,7 +84,7 @@ class SortieController extends AbstractController
             if($publier != null)
             {
                 $sorties = $sortieRepository->findAll();
-                $etatOuvert = $etatRepository->find(4);
+                $etatOuvert = $etatRepository->find(2);
                 $sortie->setEtat($etatOuvert);
                 $entityManager->persist($sortie);
                 $entityManager->flush();
@@ -333,7 +333,7 @@ class SortieController extends AbstractController
 
         if ($annuler != null)
         {
-          $etatAnnuler = $etatRepository->find(5);
+          $etatAnnuler = $etatRepository->find(1);
           $sortie->setEtat($etatAnnuler);
             $entityManager->persist($sortie);
             $entityManager->flush();

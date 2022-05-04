@@ -50,7 +50,7 @@ class MainController extends AbstractController
 
         $campus = $campusRepository->findall();
         $participants = $participantRepository->listeDesParticpantsConnecte();
-        $etatAnnuler = $etatRepository->find(5);
+        $etatAnnuler = $etatRepository->find(1);
 
         $admin = $participantRepository->find(1);
         $questionsTchat = $tchatRepository->findAll();
