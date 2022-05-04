@@ -177,7 +177,7 @@ class SortieController extends AbstractController
                         $imageName);
                 }catch (FileException$e)
                 {
-                    return $e->getTrace();
+                    return new Response($e->getMessage());
                 }
                 $sortie->setPhoto($imageName);
             }

@@ -29,6 +29,7 @@ security:
                 secret: '%kernel.secret%'
                 lifetime: 604800 # 1 week in seconds
                 path: /
+                token_provider: 'Symfony\Bridge\Doctrine\Security\RememberMe\DoctrineTokenProvider'
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication
@@ -41,6 +42,8 @@ security:
     access_control:
          - { path: ^/admin, roles: ROLE_ADMIN }
          - { path: ^/accueil, roles: ROLE_PARTICIPANT }
+         - { path: ^/sortie, roles: ROLE_PARTICIPANT }
+         - { path: ^/, roles: IS_AUTHENTICATED_ANONYMOUS }
 
     role_hierarchy:
         ROLE_ADMIN: ROLE_PARTICIPANT

@@ -1,6 +1,13 @@
 version: '3'
 
 services:
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    depends_on:
+      - db
+    ports:
+      - "8085:80"
+
   php:
     build: docker/php
     depends_on:
@@ -24,9 +31,9 @@ services:
     image: mysql:5.7
     environment:
       - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=api
-      - MYSQL_USER=api
-      - MYSQL_PASSWORD=password
+      - MYSQL_DATABASE=sortie_symfony
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=root
     volumes:
       - db-data:/var/lib/mysql:rw
 
