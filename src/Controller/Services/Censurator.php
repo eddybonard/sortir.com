@@ -12,7 +12,7 @@ class Censurator
     {
         $nomDoiseau = array('enculer','salaud','salope','petasse','connard','nique','niquer','pute');
 
-        $phrasePure = str_ireplace($nomDoiseau, '*', $phrase);
+        $phrasePure = str_ireplace($nomDoiseau, '*', mb_strtolower($phrase));
 
         return $phrasePure;
     }
